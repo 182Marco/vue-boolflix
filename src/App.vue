@@ -1,17 +1,43 @@
 <template>
   <div id="app">
     <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
-    <input type="text" />
+    <input v-model="query" type="text" />
+    <button @click="getMovie">cerca</button>
+    <div v-for="obj in result" :key="obj.id">
+      <p>{{ obj.title }}</p>
+      <p>{{ obj.original_title }}</p>
+      <p>{{ obj.original_language }}</p>
+      <p>{{ obj.vote_average }}</p>
+    </div>
   </div>
 </template>
 
 <script>
+  import axios from 'axios';
   // import HelloWorld from './components/HelloWorld.vue';
 
   export default {
     name: 'App',
     components: {
       // HelloWorld,
+    },
+    data() {
+      return {
+        api: 'https://api.themoviedb.org/3/search/movie',
+        apikey: '5f6d881d6af75a5cb6855a550e2cd3d2',
+        query: '',
+        result: '',
+      };
+    },
+    methods: {
+      getMovie() {
+        axios
+          .get(`${this.api}?api_key=${this.apikey}&query=${this.query}`)
+          .then(res => {
+            this.result = res.data.results;
+            console.log(res.data.results);
+          });
+      },
     },
   };
 </script>
@@ -31,5 +57,8 @@
     height: 100vh;
     background-color: black;
     color: $light-txt;
+  }
+  button {
+    @include btn();
   }
 </style>
