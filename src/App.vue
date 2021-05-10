@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
+    <!-- <header msg="Welcome to Your Vue.js App" /> -->
+    <HeaderComp>
+      <NavbarLeft :links="linksNavLf" />
+    </HeaderComp>
     <section>
       <input v-model="query" type="text" />
       <select v-model="language" name="" id="">
@@ -24,18 +27,32 @@
         :src="`https://image.tmdb.org/t/p/${imgSize}${obj.poster_path}`"
         :alt="`${obj.title ? obj.title : obj.name} sign poster`"
       />
+      <div>
+        <i
+          v-for="(n, i) in Math.ceil(obj.vote_average / 2)"
+          :key="i"
+          class="fas fa-star"
+        ></i>
+        <i
+          v-for="(n, i) in 5 - Math.ceil(obj.vote_average / 2)"
+          :key="`_${i}`"
+          class="far fa-star"
+        ></i>
+      </div>
     </section>
   </div>
 </template>
 
 <script>
   import axios from 'axios';
-  // import HelloWorld from './components/HelloWorld.vue';
+  import HeaderComp from './components/HeaderComp.vue';
+  import NavbarLeft from './components/NavbarLeft.vue';
 
   export default {
     name: 'App',
     components: {
-      // HelloWorld,
+      HeaderComp,
+      NavbarLeft,
     },
     data() {
       return {
@@ -48,6 +65,13 @@
         language: '',
         flags: ['en', 'it'],
         imgSize: 'w342',
+        linksNavLf: [
+          'Home',
+          'Serie TV',
+          'Film',
+          'Nuovi e popolari',
+          'La mia lista',
+        ],
       };
     },
     methods: {
@@ -95,8 +119,8 @@
   #app {
     margin: 0;
     padding: 0;
-    background-color: black;
-    color: $light-txt;
+    background-color: $main-bg;
+    color: $titleOfGrupsCol;
     min-height: 100vh;
   }
   button {
