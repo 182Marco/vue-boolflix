@@ -1,0 +1,30 @@
+@import 'var';
+@import 'mixins';
+
+body {
+  color: $txt-col;
+  font-family: $main-font;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  background-color: $main-bg;
+  padding-bottom: 100px;
+}
+
+a {
+  @include a();
+}
+input {
+  @include input();
+}
+.btn {
+  @include btn();
+}
+
+ul,
+ol {
+  list-style-position: inside;
+}
+ul {
+  list-style: none;
+}
