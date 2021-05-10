@@ -2,6 +2,10 @@
   <div id="app">
     <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
     <input v-model="query" type="text" />
+    <select v-model="language" name="" id="">
+      <option value="it-IT">it-IT</option>
+      <option value="">original</option>
+    </select>
     <button @click="getMovie">cerca</button>
     <div v-for="obj in result" :key="obj.id">
       <p>{{ obj.title }}</p>
@@ -27,12 +31,17 @@
         apikey: '5f6d881d6af75a5cb6855a550e2cd3d2',
         query: '',
         result: '',
+        language: '',
       };
     },
     methods: {
       getMovie() {
         axios
-          .get(`${this.api}?api_key=${this.apikey}&query=${this.query}`)
+          .get(
+            `${this.api}?api_key=${this.apikey}&query=${this.query} 
+            ${this.language === `` ? `` : `&language=${this.language}`}
+          `
+          )
           .then(res => {
             this.result = res.data.results;
             console.log(res.data.results);
