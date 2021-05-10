@@ -1,15 +1,17 @@
 <template>
   <div id="app">
     <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
-    <input v-model="query" type="text" />
-    <select v-model="language" name="" id="">
-      <option value="it-IT">it-IT</option>
-      <option value="">original</option>
-    </select>
-    <button @click="getMovie">cerca</button>
-    <div v-for="obj in result" :key="obj.id">
-      <p>{{ obj.title }}</p>
-      <p>{{ obj.original_title }}</p>
+    <section>
+      <input v-model="query" type="text" />
+      <select v-model="language" name="" id="">
+        <option value="it-IT">it-IT</option>
+        <option value="">original</option>
+      </select>
+      <button @click="getAllData">cerca</button>
+    </section>
+    <section v-for="obj in results" :key="obj.id">
+      <p>{{ obj.title ? obj.title : obj.name }}</p>
+      <p>{{ obj.original_title ? obj.original_title : obj.original_name }}</p>
       <span class="original-lang">Original lenguage:</span>
       <img
         v-if="flags.includes(obj.original_language)"
@@ -18,7 +20,7 @@
       />
       <span v-else>{{ obj.original_language }}</span>
       <p>{{ obj.vote_average }}</p>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -33,25 +35,43 @@
     },
     data() {
       return {
-        api: 'https://api.themoviedb.org/3/search/movie',
+        apiMv: 'https://api.themoviedb.org/3/search/movie',
+        apiTv: 'https://api.themoviedb.org/3/search/tv',
         apikey: '5f6d881d6af75a5cb6855a550e2cd3d2',
         query: '',
-        result: '',
+        mv: '',
+        results: [],
         language: '',
         flags: ['en', 'it'],
       };
     },
     methods: {
-      getMovie() {
+      getAllData() {
+        this.results = [];
+        console.log(this.results);
+        // chimata per i film
         axios
           .get(
-            `${this.api}?api_key=${this.apikey}&query=${this.query} 
+            `${this.apiMv}?api_key=${this.apikey}&query=${this.query}
             ${this.language ? `&language=${this.language}` : ''}
           `
           )
           .then(res => {
-            this.result = res.data.results;
-            console.log(res.data.results);
+            this.results = res.data.results;
+            console.log(this.results);
+          });
+        // chimata per le serie
+        axios
+          .get(
+            `${this.apiTv}?api_key=${this.apikey}&query=${this.query}
+            ${this.language ? `&language=${this.language}` : ''}
+            `
+          )
+          .then(r => {
+            console.log(typeof r.data.results);
+            console.log(r.data.results);
+            r.data.results.forEach(e => this.results.push(e));
+            console.table(this.results);
           });
       },
     },
@@ -70,9 +90,9 @@
   #app {
     margin: 0;
     padding: 0;
-    height: 100vh;
     background-color: black;
     color: $light-txt;
+    min-height: 100vh;
   }
   button {
     @include btn();
@@ -83,5 +103,9 @@
   }
   .original-lang {
     margin-right: 20px;
+  }
+
+  section {
+    padding: 5vw;
   }
 </style>
