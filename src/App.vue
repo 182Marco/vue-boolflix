@@ -10,7 +10,13 @@
     <div v-for="obj in result" :key="obj.id">
       <p>{{ obj.title }}</p>
       <p>{{ obj.original_title }}</p>
-      <p>{{ obj.original_language }}</p>
+      <span class="original-lang">Original lenguage:</span>
+      <img
+        v-if="flags.includes(obj.original_language)"
+        :src="require(`@/assets/img/${obj.original_language}.png`)"
+        :alt="`${obj.original_language} flag`"
+      />
+      <span v-else>{{ obj.original_language }}</span>
       <p>{{ obj.vote_average }}</p>
     </div>
   </div>
@@ -32,6 +38,7 @@
         query: '',
         result: '',
         language: '',
+        flags: ['en', 'it'],
       };
     },
     methods: {
@@ -39,7 +46,7 @@
         axios
           .get(
             `${this.api}?api_key=${this.apikey}&query=${this.query} 
-            ${this.language === `` ? `` : `&language=${this.language}`}
+            ${this.language ? `&language=${this.language}` : ''}
           `
           )
           .then(res => {
@@ -69,5 +76,12 @@
   }
   button {
     @include btn();
+  }
+
+  img {
+    width: 50px;
+  }
+  .original-lang {
+    margin-right: 20px;
   }
 </style>
