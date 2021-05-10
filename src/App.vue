@@ -20,6 +20,10 @@
       />
       <span v-else>{{ obj.original_language }}</span>
       <p>{{ obj.vote_average }}</p>
+      <img
+        :src="`https://image.tmdb.org/t/p/${imgSize}${obj.poster_path}`"
+        :alt="`${obj.title ? obj.title : obj.name} sign poster`"
+      />
     </section>
   </div>
 </template>
@@ -43,6 +47,7 @@
         results: [],
         language: '',
         flags: ['en', 'it'],
+        imgSize: 'w342',
       };
     },
     methods: {
