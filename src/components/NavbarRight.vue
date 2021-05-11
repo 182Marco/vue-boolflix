@@ -1,9 +1,16 @@
 <template>
   <nav>
     <ul>
-      <li>
+      <li class="search-item">
+        <input v-show="showSearch" type="text" />
         <a href="#">
-          <i class="fas fa-search"></i>
+          <i
+            @click="
+              showSearch = !showSearch;
+              handleScroll(true);
+            "
+            class="fas fa-search"
+          ></i>
         </a>
       </li>
       <li>
@@ -32,6 +39,11 @@
   export default {
     name: 'HeaderComp',
     props: {},
+    data() {
+      return {
+        showSearch: false,
+      };
+    },
   };
 </script>
 
@@ -59,6 +71,20 @@
         .arrow {
           @include equilateral-triangle(down, 5px, $white);
           margin-left: 4px;
+        }
+      }
+      &.search-item {
+        position: relative;
+        input {
+          position: absolute;
+          right: calc(100% + 20px);
+          top: 50%;
+          transform: translateY(-50%);
+          padding: 0 8px;
+          font-size: 1rem;
+          background-color: $searchBarCol;
+          color: $white;
+          border-radius: 5px;
         }
       }
     }

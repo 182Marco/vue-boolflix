@@ -1,5 +1,10 @@
 <template>
   <div id="app">
+    <img
+      class="promo-img"
+      src="@/assets/img/interstellar3.webp"
+      alt="interstellar promo"
+    />
     <!-- <header msg="Welcome to Your Vue.js App" /> -->
     <HeaderComp>
       <NavbarLeft :links="linksNavLf" />
@@ -59,6 +64,9 @@
       HeaderComp,
       NavbarLeft,
       NavbarRight,
+    },
+    created() {
+      window.addEventListener('scroll', this.handleScroll);
     },
     data() {
       return {
@@ -126,8 +134,13 @@
     margin: 0;
     padding: 0;
     background-color: $main-bg;
+    background-color: lightgrey;
     color: $titleOfGrupsCol;
-    min-height: 100vh;
+    min-height: 500vh;
+  }
+
+  .promo-img {
+    width: 100%;
   }
   button {
     @include btn();
@@ -141,6 +154,6 @@
   }
 
   section {
-    padding: 5vw;
+    padding: 0 5vw;
   }
 </style>
