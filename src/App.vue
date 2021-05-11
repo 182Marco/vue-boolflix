@@ -3,7 +3,11 @@
     <!-- <header msg="Welcome to Your Vue.js App" /> -->
     <HeaderComp>
       <NavbarLeft :links="linksNavLf" />
+      <template v-slot:search>
+        <NavbarRight />
+      </template>
     </HeaderComp>
+    <!-- inizio logica non stilata -->
     <section>
       <input v-model="query" type="text" />
       <select v-model="language" name="" id="">
@@ -47,12 +51,14 @@
   import axios from 'axios';
   import HeaderComp from './components/HeaderComp.vue';
   import NavbarLeft from './components/NavbarLeft.vue';
+  import NavbarRight from './components/NavbarRight.vue';
 
   export default {
     name: 'App',
     components: {
       HeaderComp,
       NavbarLeft,
+      NavbarRight,
     },
     data() {
       return {

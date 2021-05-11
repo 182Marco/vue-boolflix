@@ -31,7 +31,7 @@
       margin: 0;
       @include flex(row, flex-end, center);
       li {
-        margin-right: 15px;
+        margin-right: 20px;
         a {
           color: $SearchTxtCol;
           font-weight: bold;

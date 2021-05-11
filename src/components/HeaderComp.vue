@@ -5,6 +5,7 @@
         <img src="@/assets/img/brand.svg" alt="logo" />
         <slot></slot>
       </div>
+      <slot name="search"></slot>
     </div>
   </header>
 </template>
@@ -26,17 +27,17 @@
   @import '@/scss/mixins';
 
   header {
-    height: 13vh;
+    height: 12vh;
     background: linear-gradient($header-col1, $header-col2);
     .cont {
-      @include width-height(95vw, 100%);
+      @include width-height(92vw, 100%);
       @include flex(row, space-between, center);
       margin: 0 auto;
       .wrap-logoNav {
         @include flex(row, flex-start, center);
         img {
           width: 13%;
-          margin-right: 20px;
+          margin-right: 15px;
         }
       }
     }
