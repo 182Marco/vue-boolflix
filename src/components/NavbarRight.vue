@@ -3,15 +3,15 @@
     <ul>
       <li class="search-item">
         <div v-show="showSearch" class="input-wrap">
-          <input type="text" />
-          <!-- <select v-model="language" name="" id="">
-            <option value="it-IT">it-IT</option>
-            <option value="">original</option>
-          </select> -->
+          <input ref="input" type="text" />
+          <select v-model="language" name="" id="">
+            <option value="it-IT">it</option>
+            <option value="">en</option>
+          </select>
         </div>
         <i
           @click="
-            showSearch = !showSearch;
+            putFocus();
             $emit('changeBarCol');
           "
           class="fas fa-search"
@@ -47,7 +47,14 @@
       return {
         showSearch: false,
         navCol: false,
+        language: '',
       };
+    },
+    methods: {
+      putFocus() {
+        this.showSearch = !this.showSearch;
+        this.$refs.input.focus();
+      },
     },
   };
 </script>
@@ -78,7 +85,8 @@
           margin-left: 4px;
         }
       }
-      i {
+      i,
+      select {
         color: $white;
       }
       &.search-item {
@@ -89,6 +97,7 @@
           top: 50%;
           transform: translateY(-50%);
           height: 2.2vh;
+          overflow: hidden;
           input {
             height: 100%;
             padding: 0 8px;
@@ -100,7 +109,29 @@
               border: none;
             }
           }
-          // select
+          &::before {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-25%);
+            right: 2.5%;
+            @include pseudo();
+            @include equilateral-triangle(down, 3px, $brand);
+          }
+          select {
+            border: none;
+            position: absolute;
+            top: 0;
+            right: 0;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            text-indent: 1px;
+            text-overflow: '';
+            background-color: transparent;
+            @include width-height(18%, 100%);
+            &:focus {
+              outline: none;
+            }
+          }
         }
       }
     }
