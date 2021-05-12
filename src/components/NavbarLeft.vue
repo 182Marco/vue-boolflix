@@ -9,8 +9,6 @@
 </template>
 
 <script>
-  // components
-
   export default {
     name: 'NavbarLeft',
     props: {

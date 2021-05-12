@@ -3,16 +3,13 @@
     <!-- <header msg="Welcome to Your Vue.js App" /> -->
     <HeaderComp>
       <NavbarLeft :links="linksNavLf" />
-      <template v-slot:search>
-        <NavbarRight />
-      </template>
     </HeaderComp>
     <img
       class="promo-img"
       src="@/assets/img/interstellar3.webp"
       alt="interstellar promo"
     />
-    <!-- ogica non stilata -->
+    <!-- logica non stilata -->
     <section>
       <input v-model="query" type="text" />
       <select v-model="language" name="" id="">
@@ -34,7 +31,6 @@
   import axios from 'axios';
   import HeaderComp from './components/HeaderComp.vue';
   import NavbarLeft from './components/NavbarLeft.vue';
-  import NavbarRight from './components/NavbarRight.vue';
   import List from './components/List.vue';
   import Card from './components/Card.vue';
 
@@ -43,7 +39,6 @@
     components: {
       HeaderComp,
       NavbarLeft,
-      NavbarRight,
       List,
       Card,
     },

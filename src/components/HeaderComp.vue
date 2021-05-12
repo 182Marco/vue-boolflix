@@ -1,32 +1,50 @@
 <template>
-  <header ref="header">
+  <header
+    :class="{ transparent: transparent, fillBlack: fillBlack }"
+    ref="header"
+  >
     <div class="cont">
       <div class="wrap-logoNav">
         <img src="@/assets/img/brand.svg" alt="logo" />
         <slot></slot>
       </div>
-      <slot @changeBarCol="handleScroll" name="search"></slot>
+      <NavbarRight @changeBarCol="toggleColNav" />
     </div>
   </header>
 </template>
 
 <script>
   // components
+  import NavbarRight from './NavbarRight.vue';
+
   export default {
     name: 'HeaderComp',
     props: {},
+    components: {
+      NavbarRight,
+    },
+    data() {
+      return {
+        colNav: false,
+        transparent: false,
+        fillBlack: false,
+      };
+    },
     created() {
       window.addEventListener('scroll', this.handleScroll);
     },
     methods: {
-      handleScroll(search = false, height = 400) {
-        const header = this.$refs.header;
-        if (window.scrollY > height || search === true) {
-          header.classList.remove('transparent');
-          header.classList.add('fillBlack');
+      toggleColNav() {
+        this.colNav = !this.colNav;
+        this.handleScroll(this.colNav);
+      },
+      handleScroll(colNav = false, height = 450) {
+        if (window.scrollY > height || colNav) {
+          this.transparent = false;
+          this.fillBlack = true;
         } else {
-          header.classList.remove('fillBlack');
-          header.classList.add('transparent');
+          this.transparent = true;
+          this.fillBlack = false;
         }
       },
     },
@@ -41,7 +59,7 @@
   @import '@/scss/mixins';
 
   .fillBlack {
-    animation: fillBlack 1s forwards;
+    animation: fillBlack 0.6s forwards;
   }
 
   @keyframes fillBlack {
@@ -55,7 +73,7 @@
 
   .transparent {
     background-color: $header-col1;
-    animation: transparent 1s forwards;
+    animation: transparent 0.7s forwards;
   }
 
   @keyframes transparent {

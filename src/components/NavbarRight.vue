@@ -2,12 +2,18 @@
   <nav>
     <ul>
       <li class="search-item">
-        <input v-show="showSearch" type="text" />
+        <div v-show="showSearch" class="input-wrap">
+          <input type="text" />
+          <!-- <select v-model="language" name="" id="">
+            <option value="it-IT">it-IT</option>
+            <option value="">original</option>
+          </select> -->
+        </div>
         <a href="#">
           <i
             @click="
               showSearch = !showSearch;
-              $emit = ('changeBarCol', !navCol);
+              $emit('changeBarCol');
             "
             class="fas fa-search"
           ></i>
@@ -76,16 +82,24 @@
       }
       &.search-item {
         position: relative;
-        input {
+        .input-wrap {
           position: absolute;
           right: calc(100% + 20px);
           top: 50%;
           transform: translateY(-50%);
-          padding: 0 8px;
-          font-size: 1rem;
-          background-color: $searchBarCol;
-          color: $white;
-          border-radius: 5px;
+          height: 2.2vh;
+          input {
+            height: 100%;
+            padding: 0 8px;
+            font-size: 1rem;
+            background-color: $searchBarCol;
+            color: $white;
+            border-radius: 5px;
+            &:focus {
+              border: none;
+            }
+          }
+          // select
         }
       }
     }
