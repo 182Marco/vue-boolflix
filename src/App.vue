@@ -1,5 +1,12 @@
 <template>
   <div id="app">
+    <!-- <header msg="Welcome to Your Vue.js App" /> -->
+    <HeaderComp>
+      <NavbarLeft :links="linksNavLf" />
+      <template v-slot:search>
+        <NavbarRight />
+      </template>
+    </HeaderComp>
     <img
       class="promo-img"
       src="@/assets/img/interstellar3.webp"
@@ -20,13 +27,6 @@
     <List :title="`Series List`">
       <Card :films="series" :flags="flags" />
     </List>
-    <!-- <header msg="Welcome to Your Vue.js App" /> -->
-    <HeaderComp>
-      <NavbarLeft :links="linksNavLf" />
-      <template v-slot:search>
-        <NavbarRight />
-      </template>
-    </HeaderComp>
   </div>
 </template>
 
