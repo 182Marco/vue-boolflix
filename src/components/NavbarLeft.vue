@@ -13,7 +13,9 @@
 
   export default {
     name: 'NavbarLeft',
-    props: ['links'],
+    props: {
+      links: Array,
+    },
   };
 </script>
 

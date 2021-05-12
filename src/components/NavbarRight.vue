@@ -7,7 +7,7 @@
           <i
             @click="
               showSearch = !showSearch;
-              handleScroll(true);
+              $emit = ('changeBarCol', !navCol);
             "
             class="fas fa-search"
           ></i>
@@ -42,6 +42,7 @@
     data() {
       return {
         showSearch: false,
+        navCol: false,
       };
     },
   };

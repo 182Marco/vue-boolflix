@@ -5,7 +5,7 @@
         <img src="@/assets/img/brand.svg" alt="logo" />
         <slot></slot>
       </div>
-      <slot name="search"></slot>
+      <slot @changeBarCol="handleScroll" name="search"></slot>
     </div>
   </header>
 </template>
