@@ -36,16 +36,20 @@
     methods: {
       toggleColNav() {
         this.colNav = !this.colNav;
-        this.handleScroll(this.colNav);
+        this.colNav ? this.black() : this.goTransparent();
       },
-      handleScroll(colNav = false, height = 450) {
-        if (window.scrollY > height || colNav) {
-          this.transparent = false;
-          this.fillBlack = true;
-        } else {
-          this.transparent = true;
-          this.fillBlack = false;
+      handleScroll() {
+        if (!this.colNav) {
+          window.scrollY < 400 ? this.goTransparent() : this.black();
         }
+      },
+      goTransparent() {
+        this.transparent = true;
+        this.fillBlack = false;
+      },
+      black() {
+        this.transparent = false;
+        this.fillBlack = true;
       },
     },
   };

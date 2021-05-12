@@ -9,15 +9,13 @@
             <option value="">original</option>
           </select> -->
         </div>
-        <a href="#">
-          <i
-            @click="
-              showSearch = !showSearch;
-              $emit('changeBarCol');
-            "
-            class="fas fa-search"
-          ></i>
-        </a>
+        <i
+          @click="
+            showSearch = !showSearch;
+            $emit('changeBarCol');
+          "
+          class="fas fa-search"
+        ></i>
       </li>
       <li>
         <a href="#">
@@ -79,6 +77,9 @@
           @include equilateral-triangle(down, 5px, $white);
           margin-left: 4px;
         }
+      }
+      i {
+        color: $white;
       }
       &.search-item {
         position: relative;
