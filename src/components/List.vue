@@ -30,11 +30,11 @@
 
   .cont {
     width: 92vw;
-    margin: 8vh auto;
-    border: 1px solid red;
+    margin: 6vh auto;
     h2 {
       margin-bottom: 2vh;
       font-size: 1.8rem;
+      color: $white;
     }
   }
 </style>

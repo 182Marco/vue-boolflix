@@ -109,7 +109,7 @@
     background-color: $main-bg;
     background-color: $main-bg;
     color: $titleOfGrupsCol;
-    min-height: 500vh;
+    padding-bottom: 200px;
   }
 
   .promo-img {

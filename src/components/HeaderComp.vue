@@ -98,6 +98,7 @@
     left: 0;
     @include width-height(100vw, 12vh);
     background: transparent;
+    z-index: 10;
     .cont {
       @include width-height(92vw, 100%);
       @include flex(row, space-between, center);
