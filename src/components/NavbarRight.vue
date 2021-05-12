@@ -41,7 +41,7 @@
   // components
 
   export default {
-    name: 'HeaderComp',
+    name: 'NavbarRight',
     props: {},
     data() {
       return {
