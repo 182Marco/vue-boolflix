@@ -8,7 +8,7 @@
         <img src="@/assets/img/brand.svg" alt="logo" />
         <slot></slot>
       </div>
-      <NavbarRight @changeBarCol="toggleColNav" />
+      <NavbarRight @changeBarCol="toggleColNav" @sendQuery="DataToVueAp" />
     </div>
   </header>
 </template>
@@ -50,6 +50,9 @@
       black() {
         this.transparent = false;
         this.fillBlack = true;
+      },
+      DataToVueAp(query, language) {
+        this.$emit('sendedData', query, language);
       },
     },
   };

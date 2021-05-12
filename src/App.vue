@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- <header msg="Welcome to Your Vue.js App" /> -->
-    <HeaderComp>
+    <HeaderComp @sendedData="getAllData">
       <NavbarLeft :links="linksNavLf" />
     </HeaderComp>
     <img
@@ -9,15 +9,6 @@
       src="@/assets/img/interstellar3.webp"
       alt="interstellar promo"
     />
-    <!-- logica non stilata -->
-    <section>
-      <input v-model="query" type="text" />
-      <select v-model="language" name="" id="">
-        <option value="it-IT">it-IT</option>
-        <option value="">original</option>
-      </select>
-      <button @click="getAllData">cerca</button>
-    </section>
     <List :title="`Movie List`">
       <Card :films="movies" :flags="flags" />
     </List>
@@ -50,7 +41,7 @@
         apiMv: 'https://api.themoviedb.org/3/search/movie',
         apiTv: 'https://api.themoviedb.org/3/search/tv',
         apikey: '5f6d881d6af75a5cb6855a550e2cd3d2',
-        query: '',
+        // query: '',
         mv: '',
         series: [],
         movies: [],
@@ -67,15 +58,15 @@
       };
     },
     methods: {
-      getAllData() {
-        if (this.query !== '') {
+      getAllData(query, language) {
+        if (query !== '') {
           this.results = [];
           console.log(this.results);
           // chimata per i film
           axios
             .get(
-              `${this.apiMv}?api_key=${this.apikey}&query=${this.query}
-            ${this.language ? `&language=${this.language}` : ''}
+              `${this.apiMv}?api_key=${this.apikey}&query=${query}
+            ${language ? `&language=${language}` : ''}
           `
             )
             .then(res => {
@@ -85,8 +76,8 @@
           // chimata per le serie
           axios
             .get(
-              `${this.apiTv}?api_key=${this.apikey}&query=${this.query}
-            ${this.language ? `&language=${this.language}` : ''}
+              `${this.apiTv}?api_key=${this.apikey}&query=${query}
+            ${language ? `&language=${language}` : ''}
             `
             )
             .then(r => {
@@ -94,6 +85,10 @@
               console.table(this.series);
             });
         }
+      },
+      prova(query, language) {
+        console.warn(query);
+        console.warn(language);
       },
     },
   };

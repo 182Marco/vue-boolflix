@@ -3,10 +3,15 @@
     <ul>
       <li class="search-item">
         <div v-show="showSearch" class="input-wrap">
-          <input ref="input" type="text" />
+          <input
+            ref="input"
+            type="text"
+            v-model="query"
+            @keyup.enter="$emit('sendQuery', query, language)"
+          />
           <select v-model="language" name="" id="">
             <option value="it-IT">it</option>
-            <option value="">en</option>
+            <option value="en-US">en</option>
           </select>
         </div>
         <i
@@ -47,7 +52,8 @@
       return {
         showSearch: false,
         navCol: false,
-        language: '',
+        language: 'en-US',
+        query: '',
       };
     },
     methods: {
