@@ -36,7 +36,13 @@
         />
         <span v-else>{{ obj.original_language }}</span>
       </div>
-      <button class="btn play">
+      <button
+        class="btn play"
+        @click="
+          getData(obj.id);
+          showVideo = !showVideo;
+        "
+      >
         <i class="fas fa-play"></i>
       </button>
       <h3
@@ -59,6 +65,11 @@
       >
         <i class="fas fa-minus"></i> Remove from favourites list
       </h3>
+      <VideoComp
+        v-if="showVideo"
+        :keyFromApi="trailerKey"
+        :obj="obj"
+      ></VideoComp>
     </div>
     <!-- fine tag che si vedono solo con apertura della preview -->
     <a class="card" :class="{ active: open }" @click="open = true" href="#">
@@ -109,6 +120,8 @@
 </template>
 
 <script>
+  import axios from 'axios';
+  import VideoComp from './VideoComp.vue';
   // components
 
   export default {
@@ -117,16 +130,31 @@
       obj: Object,
       flags: Array,
     },
+    components: {
+      VideoComp,
+    },
     data() {
       return {
+        trailerKey: '',
         open: false,
+        apikey: '5f6d881d6af75a5cb6855a550e2cd3d2',
+        showVideo: false,
       };
     },
-    methods: {},
+    methods: {
+      getData(movieID) {
+        axios
+          .get(
+            `https://api.themoviedb.org/3/movie/${movieID}/videos?api_key=${this.apikey}&language=it-IT`
+          )
+          .then(r => {
+            this.trailerKey = r.data.results[0].key;
+          });
+      },
+    },
   };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
   /* parcials */
   @import '@/scss/var';

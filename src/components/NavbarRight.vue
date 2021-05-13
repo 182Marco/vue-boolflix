@@ -59,7 +59,7 @@
     methods: {
       putFocus() {
         this.showSearch = !this.showSearch;
-        this.$refs.input.focus();
+        setTimeout(() => this.$refs.input.focus(), 10);
       },
     },
   };
