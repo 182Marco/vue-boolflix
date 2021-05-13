@@ -38,7 +38,7 @@
       </div>
     </div>
     <!-- fine tag che si vedono solo con apertura della preview -->
-    <section class="card" :class="{ active: open }" @click="open = true">
+    <a class="card" :class="{ active: open }" @click="open = true" href="#">
       <div class="poster" :class="{ active: open }">
         <div class="img-wrap" :class="{ active: open }">
           <!-- Per la presentazione serviva un bg img 
@@ -81,7 +81,7 @@
           {{ obj.title ? obj.title : obj.name }}
         </p>
       </div>
-    </section>
+    </a>
   </div>
 </template>
 
@@ -155,103 +155,5 @@
   // quanodo a una card si aggiunge
   // la classe active
   // *****************************************
-
-  .bg-in-preview.active {
-    background-color: black;
-    margin: 0;
-    z-index: 20;
-    position: absolute;
-    @include width-height(100vw, 88vh);
-    overflow: hidden;
-    top: 0;
-    right: 0;
-    .card.active {
-      margin: 0;
-      z-index: 20;
-      position: absolute;
-      @include width-height(50vw, 100%);
-      overflow: hidden;
-      top: 0;
-      right: 0;
-      &:hover {
-        transform: scale(1);
-      }
-      .poster {
-        @include width-height(100%, 100%);
-        background-image: linear-gradient(to right, $header-col1, $main-bg);
-        position: absolute;
-        left: 0;
-        top: 0;
-        .img-wrap.active {
-          position: absolute;
-          left: 0;
-          top: 0;
-          @include width-height(100%, 100%);
-          .img-big.active {
-            display: block;
-            @include width-height(100%, 100%);
-            box-shadow: 0 0 110px 110px black inset;
-            background-size: cover;
-            background-position: center -10%;
-            background-repeat: no-repeat;
-          }
-          img.active {
-            display: none;
-            position: absolute;
-            right: 0;
-            top: 0;
-            @include width-height(100%, 100%);
-            object-fit: cover;
-            object-position: 0% 50%;
-          }
-        }
-      }
-      p.active {
-        margin-top: 10px;
-        margin-bottom: 0;
-      }
-    }
-  }
-  .close.active {
-    display: block;
-  }
-  .close.x.active {
-    cursor: pointer;
-    z-index: 30;
-    font-size: 3rem;
-    position: absolute;
-    left: 3%;
-    top: 3%;
-    color: $titleOfGrupsCol;
-    &:hover {
-      color: $white;
-    }
-  }
-  // titolo nome
-  .wrap-texts-in-prev.active {
-    z-index: 30;
-    width: 53vw;
-    @include flex(column, space-between, center);
-    display: block;
-    position: absolute;
-    top: 44%;
-    left: 29%;
-    transform: translate(-50%, -50%);
-    color: $white;
-    .name-in-preview {
-      text-align: center;
-      margin: 10px 0;
-    }
-    .stars {
-      color: $star;
-    }
-    .releaseDate {
-      margin: 0;
-      margin-bottom: 15px;
-    }
-    .flag {
-      width: 30px;
-      margin-left: 10px;
-    }
-  }
+  @import '@/scss/cardOpen';
 </style>
