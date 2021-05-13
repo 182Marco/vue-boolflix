@@ -38,12 +38,11 @@
       margin-top: 3vh;
       overflow-x: auto;
       flex-wrap: nowrap;
-      border: 1px solid red;
       padding-bottom: 40px;
       @include flex(row, flex-start, flex-start);
     }
     h2 {
-      margin: 8vh 0 0;
+      margin: 5vh 0 0;
       font-size: 1.8rem;
       color: $white;
     }
