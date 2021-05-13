@@ -119,11 +119,17 @@
 .add-to-favourites {
   font-size: 1rem;
   font-weight: 500;
-  color: $titleOfGrupsCol;
+  color: lightgreen;
   i {
     margin-right: 7px;
   }
   &:hover {
-    color: $white;
+    color: rgb(79, 255, 79);
+  }
+  &.remove {
+    color: rgb(255, 95, 95);
+    &:hover {
+      color: $brand;
+    }
   }
 }

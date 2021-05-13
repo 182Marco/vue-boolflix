@@ -9,7 +9,7 @@
       src="@/assets/img/interstellar3.webp"
       alt="interstellar promo"
     />
-    <List :title="`Movie List`">
+    <List :title="`Movies matching your search`">
       <Card
         v-for="el in movies"
         :key="el.id"
@@ -18,12 +18,26 @@
         @favuriteObj="pushFavuriteObj"
       />
     </List>
-    <List :title="`Series List`">
-      <Card v-for="el in series" :key="el.id" :obj="el" :flags="flags" />
+    <List :title="`Series matching your search`">
+      <Card
+        v-for="el in series"
+        :key="el.id"
+        :obj="el"
+        :flags="flags"
+        @favuriteObj="pushFavuriteObjSeries"
+      />
     </List>
     <List :title="`Your favourites movie list`">
       <Card
         v-for="el in favouriteMovies"
+        :key="el.id"
+        :obj="el"
+        :flags="flags"
+      />
+    </List>
+    <List :title="`Your favourites series list`">
+      <Card
+        v-for="el in favouriteSeries"
         :key="el.id"
         :obj="el"
         :flags="flags"
@@ -60,6 +74,7 @@
         series: [],
         movies: [],
         favouriteMovies: [],
+        favouriteSeries: [],
         language: '',
         flags: ['en', 'it'],
         imgSize: 'w1280',
@@ -84,7 +99,10 @@
           `
             )
             .then(res => {
-              this.movies = res.data.results;
+              const movieWithFavuoriteProp = this.AddFavouriteProp(
+                res.data.results
+              );
+              this.movies = movieWithFavuoriteProp;
             });
           // chimata per le serie
           axios
@@ -94,15 +112,25 @@
             `
             )
             .then(r => {
-              this.series = r.data.results;
+              const seriesWithFavuoriteProp = this.AddFavouriteProp(
+                r.data.results
+              );
+              this.series = seriesWithFavuoriteProp;
             });
         }
+      },
+      AddFavouriteProp(ar) {
+        return ar.map(e => ({ ...e, favourite: false }));
       },
       pushFavuriteObj(obj) {
         !this.favouriteMovies.includes(obj)
           ? this.favouriteMovies.push(obj)
           : null;
-        console.log(this.favouriteMovies);
+      },
+      pushFavuriteObjSeries(obj) {
+        !this.favouriteSeries.includes(obj)
+          ? this.favouriteSeries.push(obj)
+          : null;
       },
     },
   };

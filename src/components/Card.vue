@@ -39,8 +39,25 @@
       <button class="btn play">
         <i class="fas fa-play"></i>
       </button>
-      <h3 class="add-to-favourites" @click="$emit('favuriteObj', obj)">
+      <h3
+        class="add-to-favourites"
+        @click="
+          $emit('favuriteObj', obj);
+          obj.favourite = !obj.favourite;
+        "
+        v-show="!obj.favourite"
+      >
         <i class="fas fa-plus"></i> Add to favourites list
+      </h3>
+      <h3
+        class="remove add-to-favourites"
+        @click="
+          $emit('favuriteObj', obj);
+          obj.favourite = !obj.favourite;
+        "
+        v-show="obj.favourite"
+      >
+        <i class="fas fa-minus"></i> Remove from favourites list
       </h3>
     </div>
     <!-- fine tag che si vedono solo con apertura della preview -->
