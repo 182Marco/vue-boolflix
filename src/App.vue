@@ -16,6 +16,7 @@
         :obj="el"
         :flags="flags"
         @favuriteObj="pushFavuriteObj"
+        @noFavuriteObj="removeFavuriteObj"
       />
     </List>
     <List :title="`Series matching your search`">
@@ -25,6 +26,7 @@
         :obj="el"
         :flags="flags"
         @favuriteObj="pushFavuriteObjSeries"
+        @noFavuriteObj="removeFavuriteObjSeries"
       />
     </List>
     <List :title="`Your favourites movie list`">
@@ -33,6 +35,7 @@
         :key="el.id"
         :obj="el"
         :flags="flags"
+        @noFavuriteObj="removeFavuriteObj"
       />
     </List>
     <List :title="`Your favourites series list`">
@@ -41,6 +44,7 @@
         :key="el.id"
         :obj="el"
         :flags="flags"
+        @noFavuriteObj="removeFavuriteObjSeries"
       />
     </List>
   </div>
@@ -119,18 +123,29 @@
             });
         }
       },
+      // aumentare le props con una favurite true/false
       AddFavouriteProp(ar) {
         return ar.map(e => ({ ...e, favourite: false }));
       },
+      // aggiungere ai film favoriti
       pushFavuriteObj(obj) {
-        !this.favouriteMovies.includes(obj)
-          ? this.favouriteMovies.push(obj)
-          : null;
+        this.favouriteMovies.push(obj);
       },
+      // aggiungere alle serie favorite
       pushFavuriteObjSeries(obj) {
-        !this.favouriteSeries.includes(obj)
-          ? this.favouriteSeries.push(obj)
-          : null;
+        this.favouriteSeries.push(obj);
+      },
+      // rimuovere dai film favoriti
+      removeFavuriteObj(obj) {
+        this.favouriteMovies = [
+          ...this.favouriteMovies.filter(e => e.id != obj.id),
+        ];
+      },
+      // rimuovere dalle serie preferite
+      removeFavuriteObjSeries(obj) {
+        this.favouriteSeries = [
+          ...this.favouriteSeries.filter(e => e.id != obj.id),
+        ];
       },
     },
   };

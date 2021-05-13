@@ -52,7 +52,7 @@
       <h3
         class="remove add-to-favourites"
         @click="
-          $emit('favuriteObj', obj);
+          $emit('noFavuriteObj', obj);
           obj.favourite = !obj.favourite;
         "
         v-show="obj.favourite"

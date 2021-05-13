@@ -94,6 +94,7 @@
       i,
       select {
         color: $white;
+        cursor: pointer;
       }
       &.search-item {
         position: relative;
