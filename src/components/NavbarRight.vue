@@ -102,7 +102,7 @@
           right: calc(100% + 20px);
           top: 50%;
           transform: translateY(-50%);
-          height: 2.2vh;
+          height: 26px;
           overflow: hidden;
           input {
             height: 100%;

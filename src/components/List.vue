@@ -1,7 +1,9 @@
 <template>
-  <div class="cont">
-    <h2>{{ title }}</h2>
-    <div class="cards-wrap">
+  <div>
+    <div class="cont">
+      <h2>{{ title }}</h2>
+    </div>
+    <div class="cont cards">
       <slot></slot>
     </div>
   </div>
@@ -29,10 +31,19 @@
   @import '@/scss/mixins';
 
   .cont {
+    display: flex;
     width: 92vw;
-    margin: 6vh auto;
+    margin: 0 auto;
+    &.cards {
+      margin-top: 3vh;
+      overflow-x: auto;
+      flex-wrap: nowrap;
+      border: 1px solid red;
+      padding-bottom: 40px;
+      @include flex(row, flex-start, flex-start);
+    }
     h2 {
-      margin-bottom: 2vh;
+      margin: 8vh 0 0;
       font-size: 1.8rem;
       color: $white;
     }

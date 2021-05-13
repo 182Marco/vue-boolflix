@@ -10,10 +10,10 @@
       alt="interstellar promo"
     />
     <List :title="`Movie List`">
-      <Card :films="movies" :flags="flags" />
+      <Card v-for="el in movies" :key="el.id" :obj="el" :flags="flags" />
     </List>
     <List :title="`Series List`">
-      <Card :films="series" :flags="flags" />
+      <Card v-for="el in series" :key="el.id" :obj="el" :flags="flags" />
     </List>
   </div>
 </template>
@@ -47,7 +47,7 @@
         movies: [],
         language: '',
         flags: ['en', 'it'],
-        imgSize: 'w342',
+        imgSize: 'w1280',
         linksNavLf: [
           'Home',
           'Serie TV',
