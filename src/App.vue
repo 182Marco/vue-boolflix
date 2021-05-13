@@ -10,10 +10,24 @@
       alt="interstellar promo"
     />
     <List :title="`Movie List`">
-      <Card v-for="el in movies" :key="el.id" :obj="el" :flags="flags" />
+      <Card
+        v-for="el in movies"
+        :key="el.id"
+        :obj="el"
+        :flags="flags"
+        @favuriteObj="pushFavuriteObj"
+      />
     </List>
     <List :title="`Series List`">
       <Card v-for="el in series" :key="el.id" :obj="el" :flags="flags" />
+    </List>
+    <List :title="`Your favourites movie list`">
+      <Card
+        v-for="el in favouriteMovies"
+        :key="el.id"
+        :obj="el"
+        :flags="flags"
+      />
     </List>
   </div>
 </template>
@@ -45,6 +59,7 @@
         mv: '',
         series: [],
         movies: [],
+        favouriteMovies: [],
         language: '',
         flags: ['en', 'it'],
         imgSize: 'w1280',
@@ -61,7 +76,6 @@
       getAllData(query, language) {
         if (query !== '') {
           this.results = [];
-          console.log(this.results);
           // chimata per i film
           axios
             .get(
@@ -71,7 +85,6 @@
             )
             .then(res => {
               this.movies = res.data.results;
-              console.log(this.movies);
             });
           // chimata per le serie
           axios
@@ -82,13 +95,14 @@
             )
             .then(r => {
               this.series = r.data.results;
-              console.table(this.series);
             });
         }
       },
-      prova(query, language) {
-        console.warn(query);
-        console.warn(language);
+      pushFavuriteObj(obj) {
+        !this.favouriteMovies.includes(obj)
+          ? this.favouriteMovies.push(obj)
+          : null;
+        console.log(this.favouriteMovies);
       },
     },
   };
@@ -114,9 +128,6 @@
 
   .promo-img {
     width: 100%;
-  }
-  button {
-    @include btn();
   }
 
   img {

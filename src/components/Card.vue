@@ -36,6 +36,12 @@
         />
         <span v-else>{{ obj.original_language }}</span>
       </div>
+      <button class="btn play">
+        <i class="fas fa-play"></i>
+      </button>
+      <h3 class="add-to-favourites" @click="$emit('favuriteObj', obj)">
+        <i class="fas fa-plus"></i> Add to favourites list
+      </h3>
     </div>
     <!-- fine tag che si vedono solo con apertura della preview -->
     <a class="card" :class="{ active: open }" @click="open = true" href="#">
@@ -129,6 +135,7 @@
       img {
         @include width-height(100%, 100%);
         object-fit: contain;
+        max-width: 233px;
       }
     }
     p {

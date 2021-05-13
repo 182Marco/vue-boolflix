@@ -60,7 +60,7 @@
 .close.x.active {
   cursor: pointer;
   z-index: 30;
-  font-size: 3rem;
+  font-size: $FontIco;
   position: absolute;
   left: 3%;
   top: 3%;
@@ -94,5 +94,36 @@
   .flag {
     width: 30px;
     margin-left: 10px;
+  }
+
+  button.btn.play {
+    @include flex(row, center, center);
+    @include width-height(43px, 43px);
+    margin: 22px 0;
+    background-color: transparent;
+    color: $titleOfGrupsCol;
+    border: 4px solid $titleOfGrupsCol;
+    border-radius: 50%;
+    &:hover {
+      color: $white;
+      border: 4px solid $white;
+    }
+    .fa-play {
+      margin-top: 2px;
+      padding-left: 4px;
+      font-size: 1.3rem;
+    }
+  }
+}
+
+.add-to-favourites {
+  font-size: 1rem;
+  font-weight: 500;
+  color: $titleOfGrupsCol;
+  i {
+    margin-right: 7px;
+  }
+  &:hover {
+    color: $white;
   }
 }
