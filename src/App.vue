@@ -1,78 +1,84 @@
 <template>
   <div id="app">
-    <!-- <header msg="Welcome to Your Vue.js App" /> -->
-    <HeaderComp @sendedData="getAllData">
-      <NavbarLeft :links="linksNavLf" />
-    </HeaderComp>
-    <img
-      class="promo-img"
-      src="@/assets/img/interstellar3.webp"
-      alt="interstellar promo"
-    />
-    <List :title="`Movies matching your search`" v-show="movies.length > 0">
-      <Card
-        v-for="el in movies"
-        :key="el.id"
-        :obj="el"
-        :flags="flags"
-        @favuriteObj="pushFavuriteObj"
-        @noFavuriteObj="removeFavuriteObj"
+    <!-- login -->
+    <LoginPage v-show="!loginDone" @completedLogin="loginDone = !loginDone" />
+    <!-- scelta utente -->
+    <!-- comincia app vera e propria -->
+    <div class="appMenu-page" v-show="loginDone">
+      <!-- <header msg="Welcome to Your Vue.js App" /> -->
+      <HeaderComp @sendedData="getAllData">
+        <NavbarLeft :links="linksNavLf" />
+      </HeaderComp>
+      <img
+        class="promo-img"
+        src="@/assets/img/interstellar3.webp"
+        alt="interstellar promo"
       />
-    </List>
-    <List :title="`Series matching your search`" v-show="series.length > 0">
-      <Card
-        v-for="el in series"
-        :key="el.id"
-        :obj="el"
-        :flags="flags"
-        @favuriteObj="pushFavuriteObjSeries"
-        @noFavuriteObj="removeFavuriteObjSeries"
-      />
-    </List>
-    <List :title="`Popular movies`">
-      <Card
-        v-for="el in popularMov"
-        :key="el.id"
-        :obj="el"
-        :flags="flags"
-        @favuriteObj="pushFavuriteObj"
-        @noFavuriteObj="removeFavuriteObj"
-      />
-    </List>
-    <List :title="`Popular series`">
-      <Card
-        v-for="el in popularSeries"
-        :key="el.id"
-        :obj="el"
-        :flags="flags"
-        @favuriteObj="pushFavuriteObjSeries"
-        @noFavuriteObj="removeFavuriteObj"
-      />
-    </List>
-    <List
-      :title="`Your favourites movie list`"
-      v-show="favouriteMovies.length > 0"
-    >
-      <Card
-        v-for="el in favouriteMovies"
-        :key="el.id"
-        :obj="el"
-        :flags="flags"
-        @noFavuriteObj="removeFavuriteObj"
-      />
-    </List>
-    <List
-      :title="`Your favourites series list`"
-      v-show="favouriteSeries.length > 0"
-    >
-      <Card
-        v-for="el in favouriteSeries"
-        :key="el.id"
-        :obj="el"
-        :flags="flags"
-        @noFavuriteObj="removeFavuriteObjSeries"
-      />
-    </List>
+      <List :title="`Movies matching your search`" v-show="movies.length > 0">
+        <Card
+          v-for="el in movies"
+          :key="el.id"
+          :obj="el"
+          :flags="flags"
+          @favuriteObj="pushFavuriteObj"
+          @noFavuriteObj="removeFavuriteObj"
+        />
+      </List>
+      <List :title="`Series matching your search`" v-show="series.length > 0">
+        <Card
+          v-for="el in series"
+          :key="el.id"
+          :obj="el"
+          :flags="flags"
+          @favuriteObj="pushFavuriteObjSeries"
+          @noFavuriteObj="removeFavuriteObjSeries"
+        />
+      </List>
+      <List :title="`Popular movie on Netflix:`">
+        <Card
+          v-for="el in popularMov"
+          :key="el.id"
+          :obj="el"
+          :flags="flags"
+          @favuriteObj="pushFavuriteObj"
+          @noFavuriteObj="removeFavuriteObj"
+        />
+      </List>
+      <List :title="`Popular series on Netflix`">
+        <Card
+          v-for="el in popularSeries"
+          :key="el.id"
+          :obj="el"
+          :flags="flags"
+          @favuriteObj="pushFavuriteObjSeries"
+          @noFavuriteObj="removeFavuriteObj"
+        />
+      </List>
+      <List
+        :title="`Your favourites movie list`"
+        v-show="favouriteMovies.length > 0"
+      >
+        <Card
+          v-for="el in favouriteMovies"
+          :key="el.id"
+          :obj="el"
+          :flags="flags"
+          @noFavuriteObj="removeFavuriteObj"
+        />
+      </List>
+      <List
+        :title="`Your favourites series list`"
+        v-show="favouriteSeries.length > 0"
+      >
+        <Card
+          v-for="el in favouriteSeries"
+          :key="el.id"
+          :obj="el"
+          :flags="flags"
+          @noFavuriteObj="removeFavuriteObjSeries"
+        />
+      </List>
+    </div>
   </div>
 </template>
 
@@ -82,6 +88,7 @@
   import NavbarLeft from './components/NavbarLeft.vue';
   import List from './components/List.vue';
   import Card from './components/Card.vue';
+  import LoginPage from './components/LoginPage.vue';
 
   export default {
     name: 'App',
@@ -90,6 +97,7 @@
       NavbarLeft,
       List,
       Card,
+      LoginPage,
     },
     created() {
       window.addEventListener('scroll', this.handleScroll);
@@ -98,6 +106,7 @@
     },
     data() {
       return {
+        loginDone: false,
         basicUrl: 'https://api.themoviedb.org/3',
         apiMv: '/movie',
         apiTv: '/tv',
@@ -219,6 +228,9 @@
     background-color: $main-bg;
     background-color: $main-bg;
     color: $titleOfGrupsCol;
+  }
+
+  .appMenu-page {
     padding-bottom: 200px;
   }
 
