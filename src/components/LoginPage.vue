@@ -14,17 +14,19 @@
           placeholder="Email"
           class="mail input"
           type="mail"
-          @keyup.enter="passDownFocus"
-          v-model="mailInmitted"
+          @keyup.enter="passDownFocus()"
+          v-model.trim="mailInmitted"
         />
         <input
-          v-model="pswInmitted"
+          v-model.trim="pswInmitted"
           ref="psw"
           placeholder="Password"
           class="psw"
           type="password"
         />
-        <button @click="ceckSignIn">Sign In</button>
+        <button @click="ceckSignIn(users, mailInmitted, pswInmitted)">
+          Sign In
+        </button>
       </div>
     </div>
   </div>
@@ -40,18 +42,30 @@
       return {
         mailInmitted: '',
         pswInmitted: '',
-        mail: 'marcomilza@gmail.com',
-        psw: 'xxx',
+        users: [
+          {
+            mail: 'marcomilza@gmail.com',
+            psw: 'xxx',
+          },
+          {
+            mail: 'ugo@gmail.com',
+            psw: 'aaa',
+          },
+          {
+            mail: 'p@gmail.it',
+            psw: 'bbb',
+          },
+        ],
       };
     },
     methods: {
+      ceckSignIn(arOfObj, mailIn, pswIn) {
+        arOfObj.filter(e => e.mail === mailIn && e.psw === pswIn).length > 0
+          ? this.$emit('completedLogin')
+          : null;
+      },
       passDownFocus() {
         this.$refs.psw.focus();
-      },
-      ceckSignIn() {
-        if (this.mailInmitted === this.mail && this.pswInmitted === this.psw) {
-          this.$emit('completedLogin');
-        }
       },
     },
   };
