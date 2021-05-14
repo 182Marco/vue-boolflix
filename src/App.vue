@@ -9,11 +9,8 @@
       <HeaderComp @sendedData="getAllData">
         <NavbarLeft :links="linksNavLf" />
       </HeaderComp>
-      <img
-        class="promo-img"
-        src="@/assets/img/interstellar3.webp"
-        alt="interstellar promo"
-      />
+      <!-- film spinto molto su jumbo -->
+      <PromoMovie />
       <List :title="`Movies matching your search`" v-show="movies.length > 0">
         <Card
           v-for="el in movies"
@@ -89,6 +86,7 @@
   import List from './components/List.vue';
   import Card from './components/Card.vue';
   import LoginPage from './components/LoginPage.vue';
+  import PromoMovie from './components/PromoMovie.vue';
 
   export default {
     name: 'App',
@@ -98,6 +96,7 @@
       List,
       Card,
       LoginPage,
+      PromoMovie,
     },
     created() {
       window.addEventListener('scroll', this.handleScroll);
@@ -106,7 +105,9 @@
     },
     data() {
       return {
-        loginDone: false,
+        // ********
+        loginDone: true,
+        // ********
         basicUrl: 'https://api.themoviedb.org/3',
         apiMv: '/movie',
         apiTv: '/tv',
@@ -150,6 +151,7 @@
                 res.data.results
               );
               this.movies = movieWithFavuoriteProp;
+              console.log(this.movies);
             });
           // chimata per le serie
           axios
@@ -232,10 +234,6 @@
 
   .appMenu-page {
     padding-bottom: 200px;
-  }
-
-  .promo-img {
-    width: 100%;
   }
 
   img {
