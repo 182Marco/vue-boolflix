@@ -27,6 +27,7 @@
         <button @click="ceckSignIn(users, mailInmitted, pswInmitted)">
           Sign In
         </button>
+        <p v-if="er">Mail o Password errati</p>
       </div>
     </div>
   </div>
@@ -40,6 +41,7 @@
     props: {},
     data() {
       return {
+        er: false,
         mailInmitted: '',
         pswInmitted: '',
         users: [
@@ -60,9 +62,14 @@
     },
     methods: {
       ceckSignIn(arOfObj, mailIn, pswIn) {
-        arOfObj.filter(e => e.mail === mailIn && e.psw === pswIn).length > 0
-          ? this.$emit('completedLogin')
-          : null;
+        if (
+          arOfObj.filter(e => e.mail === mailIn && e.psw === pswIn).length > 0
+        ) {
+          this.$emit('completedLogin');
+        } else {
+          this.er = true;
+          setTimeout(() => (this.er = false), 3000);
+        }
       },
       passDownFocus() {
         this.$refs.psw.focus();
@@ -130,6 +137,9 @@
           border: 0;
           box-shadow: 0 0 1px 1px $brand;
         }
+      }
+      p {
+        color: red;
       }
     }
   }
