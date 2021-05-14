@@ -7,7 +7,7 @@
             ref="input"
             type="text"
             v-model="query"
-            @keyup.enter="$emit('sendQuery', query, language)"
+            @keyup="$emit('sendQuery', query, language)"
           />
           <select v-model="language" name="" id="">
             <option value="it-IT">it</option>

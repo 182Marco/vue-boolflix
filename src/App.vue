@@ -9,7 +9,7 @@
       src="@/assets/img/interstellar3.webp"
       alt="interstellar promo"
     />
-    <List :title="`Movies matching your search`">
+    <List :title="`Movies matching your search`" v-show="movies.length > 0">
       <Card
         v-for="el in movies"
         :key="el.id"
@@ -19,7 +19,7 @@
         @noFavuriteObj="removeFavuriteObj"
       />
     </List>
-    <List :title="`Series matching your search`">
+    <List :title="`Series matching your search`" v-show="series.length > 0">
       <Card
         v-for="el in series"
         :key="el.id"
@@ -29,7 +29,30 @@
         @noFavuriteObj="removeFavuriteObjSeries"
       />
     </List>
-    <List :title="`Your favourites movie list`">
+    <List :title="`Popular movies`">
+      <Card
+        v-for="el in popularMov"
+        :key="el.id"
+        :obj="el"
+        :flags="flags"
+        @favuriteObj="pushFavuriteObj"
+        @noFavuriteObj="removeFavuriteObj"
+      />
+    </List>
+    <List :title="`Popular series`">
+      <Card
+        v-for="el in popularSeries"
+        :key="el.id"
+        :obj="el"
+        :flags="flags"
+        @favuriteObj="pushFavuriteObjSeries"
+        @noFavuriteObj="removeFavuriteObj"
+      />
+    </List>
+    <List
+      :title="`Your favourites movie list`"
+      v-show="favouriteMovies.length > 0"
+    >
       <Card
         v-for="el in favouriteMovies"
         :key="el.id"
@@ -38,7 +61,10 @@
         @noFavuriteObj="removeFavuriteObj"
       />
     </List>
-    <List :title="`Your favourites series list`">
+    <List
+      :title="`Your favourites series list`"
+      v-show="favouriteSeries.length > 0"
+    >
       <Card
         v-for="el in favouriteSeries"
         :key="el.id"
@@ -67,21 +93,27 @@
     },
     created() {
       window.addEventListener('scroll', this.handleScroll);
+      this.getTrends('movie');
+      this.getTrends('tv');
     },
     data() {
       return {
-        apiMv: 'https://api.themoviedb.org/3/search/movie',
-        apiTv: 'https://api.themoviedb.org/3/search/tv',
+        basicUrl: 'https://api.themoviedb.org/3',
+        apiMv: '/movie',
+        apiTv: '/tv',
         apikey: '5f6d881d6af75a5cb6855a550e2cd3d2',
-        // query: '',
         mv: '',
+        // arrays dei film e serie cercati
         series: [],
         movies: [],
         favouriteMovies: [],
         favouriteSeries: [],
         language: '',
+        // array che si poplano al caricamento
+        popularMov: [],
+        popularSeries: [],
         flags: ['en', 'it'],
-        imgSize: 'w1280',
+        imgSize: 'w780',
         linksNavLf: [
           'Home',
           'Serie TV',
@@ -98,7 +130,9 @@
           // chimata per i film
           axios
             .get(
-              `${this.apiMv}?api_key=${this.apikey}&query=${query}
+              `${this.basicUrl}/search${this.apiMv}?api_key=${
+                this.apikey
+              }&query=${query}
             ${language ? `&language=${language}` : ''}
           `
             )
@@ -111,9 +145,11 @@
           // chimata per le serie
           axios
             .get(
-              `${this.apiTv}?api_key=${this.apikey}&query=${query}
-            ${language ? `&language=${language}` : ''}
-            `
+              `${this.basicUrl}/search${this.apiTv}?api_key=${
+                this.apikey
+              }&query=${query}
+              ${language ? `&language=${language}` : ''}
+              `
             )
             .then(r => {
               const seriesWithFavuoriteProp = this.AddFavouriteProp(
@@ -122,6 +158,23 @@
               this.series = seriesWithFavuoriteProp;
             });
         }
+      },
+      // chiamata per popolare subito l'app con film trend
+      // rimuovere dalle serie preferite
+      getTrends(type) {
+        axios
+          .get(
+            `${this.basicUrl}/${type}/popular?api_key=${this.apikey}&language=en-US&page=1`
+          )
+          .then(r => {
+            const popularWithFavuoriteProp = this.AddFavouriteProp(
+              r.data.results
+            );
+            // faccio un ceck per capire se sono film per scegliere array da popolare
+            r.data.results[0].title
+              ? (this.popularMov = popularWithFavuoriteProp)
+              : (this.popularSeries = popularWithFavuoriteProp);
+          });
       },
       // aumentare le props con una favurite true/false
       AddFavouriteProp(ar) {

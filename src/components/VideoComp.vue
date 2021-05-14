@@ -30,6 +30,11 @@
         renderVideo: true,
         playWhenCreated: '?autoplay=1',
         showXclose: false,
+        // dal 2018 you tube non fa più bloccare i related
+        // però si possono bloccare almeno quelli sotto
+        //  il video quando si preme stop. Non lo uso perchè
+        // sembra esssere alternativo all'autoplay
+        noShowReletedWhenStop: '?rel=0',
       };
     },
     created() {
@@ -47,19 +52,18 @@
   @import '@/scss/var';
   @import '@/scss/reset';
   @import '@/scss/mixins';
-
   .wrap {
     position: relative;
     @include width-height(100vw, 100vh);
     position: absolute;
     left: -34px;
-    top: -300px;
+    top: -250px;
     z-index: 50;
     .x.close {
       font-size: $FontIco;
       position: absolute;
       left: 3%;
-      top: 17%;
+      top: 15%;
       color: $titleOfGrupsCol;
       font-size: $FontIco;
       cursor: pointer;

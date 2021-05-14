@@ -39,7 +39,7 @@
       <button
         class="btn play"
         @click="
-          getData(obj.id);
+          getData(obj.id, obj.title);
           showVideo = !showVideo;
         "
       >
@@ -135,6 +135,9 @@
     },
     data() {
       return {
+        BasicUrlMoreDataSingleEL: 'https://api.themoviedb.org/3',
+        getMovie: '/movie',
+        getSeries: '/tv',
         trailerKey: '',
         open: false,
         apikey: '5f6d881d6af75a5cb6855a550e2cd3d2',
@@ -142,14 +145,25 @@
       };
     },
     methods: {
-      getData(movieID) {
-        axios
-          .get(
-            `https://api.themoviedb.org/3/movie/${movieID}/videos?api_key=${this.apikey}&language=it-IT`
-          )
-          .then(r => {
-            this.trailerKey = r.data.results[0].key;
-          });
+      getData(id, isMovie) {
+        // controllo subito se di tratta di un film per evitare due chiamate axios al posto di una
+        if (isMovie) {
+          axios
+            .get(
+              `${this.BasicUrlMoreDataSingleEL}${this.getMovie}/${id}/videos?api_key=${this.apikey}&language=it-IT`
+            )
+            .then(r => {
+              this.trailerKey = r.data.results[0].key;
+            });
+        } else {
+          axios
+            .get(
+              `${this.BasicUrlMoreDataSingleEL}${this.getSeries}/${id}/videos?api_key=${this.apikey}&language=en-US`
+            )
+            .then(r => {
+              this.trailerKey = r.data.results[0].key;
+            });
+        }
       },
     },
   };
