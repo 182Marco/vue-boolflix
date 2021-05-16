@@ -1,10 +1,16 @@
 <template>
   <div id="app">
     <!-- login -->
-    <LoginPage v-show="!loginDone" @completedLogin="loginDone = !loginDone" />
-    <!-- scelta utente -->
+    <InitialBg v-show="!accountDone">
+      <LoginPage v-show="!loginDone" @completedLogin="loginDone = !loginDone" />
+      <!-- scelta utente -->
+      <Account
+        v-show="loginDone && !accountDone"
+        @accountChosen="accountDone = true"
+      />
+    </InitialBg>
     <!-- comincia app vera e propria -->
-    <div class="appMenu-page" v-show="loginDone">
+    <div class="appMenu-page" v-show="accountDone">
       <!-- <header msg="Welcome to Your Vue.js App" /> -->
       <HeaderComp @sendedData="getAllData">
         <NavbarLeft :links="linksNavLf" />
@@ -87,15 +93,19 @@
   import Card from './components/Card.vue';
   import LoginPage from './components/LoginPage.vue';
   import PromoMovie from './components/PromoMovie.vue';
+  import InitialBg from './components/InitialBg.vue';
+  import Account from './components/Account.vue';
 
   export default {
     name: 'App',
     components: {
+      InitialBg,
+      LoginPage,
+      Account,
       HeaderComp,
       NavbarLeft,
       List,
       Card,
-      LoginPage,
       PromoMovie,
     },
     created() {
@@ -105,9 +115,8 @@
     },
     data() {
       return {
-        // ********
-        loginDone: true,
-        // ********
+        loginDone: false,
+        accountDone: false,
         basicUrl: 'https://api.themoviedb.org/3',
         apiMv: '/movie',
         apiTv: '/tv',
@@ -151,7 +160,6 @@
                 res.data.results
               );
               this.movies = movieWithFavuoriteProp;
-              console.log(this.movies);
             });
           // chimata per le serie
           axios

@@ -5,7 +5,6 @@
       backgroundImage: 'url(' + require('@/assets/img/netflixBg.webp') + ')',
     }"
   >
-    <img class="logo" src="@/assets/img/brand.svg" alt="logo" />
     <div class="login-box">
       <div class="txt-box">
         <!-- testi del login -->
@@ -15,16 +14,17 @@
           class="mail input"
           type="mail"
           @keyup.enter="passDownFocus()"
-          v-model.trim="mailInmitted"
+          v-model.trim="mailIn"
         />
         <input
-          v-model.trim="pswInmitted"
+          v-model.trim="pswIn"
           ref="psw"
           placeholder="Password"
           class="psw"
           type="password"
+          @keyup.enter="ceckSignIn(users, mailIn, pswIn)"
         />
-        <button @click="ceckSignIn(users, mailInmitted, pswInmitted)">
+        <button @click="ceckSignIn(users, mailIn, pswIn)">
           Sign In
         </button>
         <p v-if="er">Mail o Password errati</p>
@@ -42,8 +42,8 @@
     data() {
       return {
         er: false,
-        mailInmitted: '',
-        pswInmitted: '',
+        mailIn: '',
+        pswIn: '',
         users: [
           {
             mail: 'marcomilza@gmail.com',
@@ -85,16 +85,16 @@
   @import '@/scss/reset';
   @import '@/scss/mixins';
   .main-cont {
+    position: absolute;
+    top: 0;
+    left: 0;
     @include width-height(100vw, 100vh);
+    @include flex(row, center, center);
   }
 
-  .logo {
-    width: 17%;
-    margin-right: 15px;
-  }
   .login-box {
     @include width-height(27%, 73%);
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.7);
     margin: 0 auto;
     @include flex(row, center, center);
     .txt-box {
