@@ -47,7 +47,10 @@
       </button>
       <h3
         class="add-to-favourites"
-        @click="pushFavuriteObj(obj)"
+        @click="
+          obj.favourite = !obj.favourite;
+          pushFavuriteObj(obj);
+        "
         v-show="!obj.favourite"
       >
         <i class="fas fa-plus"></i> Add to favourites list
@@ -56,7 +59,7 @@
         class="remove add-to-favourites"
         @click="
           obj.favourite = !obj.favourite;
-          $emit('noFavuriteObj', obj);
+          removeFavuriteObj(obj);
         "
         v-show="obj.favourite"
       >
@@ -144,12 +147,7 @@
     },
     methods: {
       // MUTAZIONI
-      ...mapMutations([
-        'pushFavuriteObj',
-        'pushFavuriteObjSeries',
-        'removeFavuriteObj',
-        'removeFavuriteObjSeries',
-      ]),
+      ...mapMutations(['pushFavuriteObj', 'removeFavuriteObj']),
       // *****
       getData(id, isMovie) {
         // controllo subito se di tratta di un film per evitare due chiamate axios al posto di una

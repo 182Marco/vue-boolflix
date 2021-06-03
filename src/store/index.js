@@ -13,23 +13,22 @@ export default new Vuex.Store({
   mutations: {
     // aggiungere ai film favoriti
     pushFavuriteObj(state, obj) {
-      state.favouriteMovies.push(obj);
-    },
-    // aggiungere alle serie favorite
-    pushFavuriteObjSeries(state, obj) {
-      state.favouriteSeries.push(obj);
+      // per discernere ar film da ar serie sfrutto
+      // il fatto che serie hanno la prop name al posto
+      // della prop titolo
+      obj.title
+        ? state.favouriteMovies.push(obj)
+        : state.favouriteSeries.push(obj);
     },
     // rimuovere dai film favoriti
     removeFavuriteObj(state, obj) {
-      state.favouriteMovies = [
-        ...state.favouriteMovies.filter(e => e.id != obj.id),
-      ];
-    },
-    // rimuovere dalle serie preferite
-    removeFavuriteObjSeries(state, obj) {
-      state.favouriteSeries = [
-        ...state.favouriteSeries.filter(e => e.id != obj.id),
-      ];
+      obj.title
+        ? (state.favouriteMovies = [
+            ...state.favouriteMovies.filter(e => e.id != obj.id),
+          ])
+        : (state.favouriteSeries = [
+            ...state.favouriteSeries.filter(e => e.id != obj.id),
+          ]);
     },
   },
   actions: {},

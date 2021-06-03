@@ -116,7 +116,6 @@
         // arrays dei film e serie cercati
         series: [],
         movies: [],
-        favouriteSeries: [],
         language: '',
         // array che si poplano al caricamento
         popularMov: [],
@@ -133,7 +132,7 @@
       };
     },
     computed: {
-      ...mapState(['test', 'favouriteMovies']),
+      ...mapState(['test', 'favouriteMovies', 'favouriteSeries']),
     },
     methods: {
       getAllData(query, language) {
