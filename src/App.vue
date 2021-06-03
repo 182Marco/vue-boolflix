@@ -38,14 +38,7 @@
         />
       </List>
       <List :title="`Popular movie on Netflix:`">
-        <Card
-          v-for="el in popularMov"
-          :key="el.id"
-          :obj="el"
-          :flags="flags"
-          @favuriteObj="pushFavuriteObj"
-          @noFavuriteObj="removeFavuriteObj"
-        />
+        <Card v-for="el in popularMov" :key="el.id" :obj="el" :flags="flags" />
       </List>
       <List :title="`Popular series on Netflix`">
         <Card
@@ -53,8 +46,6 @@
           :key="el.id"
           :obj="el"
           :flags="flags"
-          @favuriteObj="pushFavuriteObjSeries"
-          @noFavuriteObj="removeFavuriteObj"
         />
       </List>
       <List
@@ -63,10 +54,9 @@
       >
         <Card
           v-for="el in favouriteMovies"
-          :key="el.id"
+          :key="`favM_${el.id}`"
           :obj="el"
           :flags="flags"
-          @noFavuriteObj="removeFavuriteObj"
         />
       </List>
       <List
@@ -75,10 +65,9 @@
       >
         <Card
           v-for="el in favouriteSeries"
-          :key="el.id"
+          :key="`favS_${el.id}`"
           :obj="el"
           :flags="flags"
-          @noFavuriteObj="removeFavuriteObjSeries"
         />
       </List>
       <h1>{{ test }}</h1>
@@ -127,7 +116,6 @@
         // arrays dei film e serie cercati
         series: [],
         movies: [],
-        favouriteMovies: [],
         favouriteSeries: [],
         language: '',
         // array che si poplano al caricamento
@@ -145,7 +133,7 @@
       };
     },
     computed: {
-      ...mapState(['test']),
+      ...mapState(['test', 'favouriteMovies']),
     },
     methods: {
       getAllData(query, language) {
@@ -203,26 +191,6 @@
       // aumentare le props con una favurite true/false
       AddFavouriteProp(ar) {
         return ar.map(e => ({ ...e, favourite: false }));
-      },
-      // aggiungere ai film favoriti
-      pushFavuriteObj(obj) {
-        this.favouriteMovies.push(obj);
-      },
-      // aggiungere alle serie favorite
-      pushFavuriteObjSeries(obj) {
-        this.favouriteSeries.push(obj);
-      },
-      // rimuovere dai film favoriti
-      removeFavuriteObj(obj) {
-        this.favouriteMovies = [
-          ...this.favouriteMovies.filter(e => e.id != obj.id),
-        ];
-      },
-      // rimuovere dalle serie preferite
-      removeFavuriteObjSeries(obj) {
-        this.favouriteSeries = [
-          ...this.favouriteSeries.filter(e => e.id != obj.id),
-        ];
       },
     },
   };

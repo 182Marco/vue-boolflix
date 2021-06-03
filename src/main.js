@@ -3,8 +3,9 @@ import App from './App.vue';
 // NECESSARIO PER FUNZIONAMENTO DI VUEX
 import store from './store/index.js';
 import Vuex from 'vuex';
-// ****************************+***********
+
 Vue.use(Vuex);
+// ****************************+***********
 
 Vue.config.productionTip = false;
 

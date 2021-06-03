@@ -25,7 +25,7 @@
       <p class="overview">
         {{ obj.overview }}
       </p>
-      <p class="releaseDate">relese date: {{ obj.release_date }}</p>
+      <p class="releaseDate">release date: {{ obj.release_date }}</p>
       <div class="original-lang" :class="{ active: open }">
         <span>Original lenguage:</span>
         <img
@@ -47,10 +47,7 @@
       </button>
       <h3
         class="add-to-favourites"
-        @click="
-          $emit('favuriteObj', obj);
-          obj.favourite = !obj.favourite;
-        "
+        @click="pushFavuriteObj(obj)"
         v-show="!obj.favourite"
       >
         <i class="fas fa-plus"></i> Add to favourites list
@@ -58,8 +55,8 @@
       <h3
         class="remove add-to-favourites"
         @click="
-          $emit('noFavuriteObj', obj);
           obj.favourite = !obj.favourite;
+          $emit('noFavuriteObj', obj);
         "
         v-show="obj.favourite"
       >
@@ -120,6 +117,7 @@
 </template>
 
 <script>
+  import { mapMutations } from 'vuex';
   import axios from 'axios';
   import VideoComp from './VideoComp.vue';
   // components
@@ -145,6 +143,14 @@
       };
     },
     methods: {
+      // MUTAZIONI
+      ...mapMutations([
+        'pushFavuriteObj',
+        'pushFavuriteObjSeries',
+        'removeFavuriteObj',
+        'removeFavuriteObjSeries',
+      ]),
+      // *****
       getData(id, isMovie) {
         // controllo subito se di tratta di un film per evitare due chiamate axios al posto di una
         if (isMovie) {
