@@ -81,11 +81,13 @@
           @noFavuriteObj="removeFavuriteObjSeries"
         />
       </List>
+      <h1>{{ test }}</h1>
     </div>
   </div>
 </template>
 
 <script>
+  import { mapState } from 'vuex';
   import axios from 'axios';
   import HeaderComp from './components/HeaderComp.vue';
   import NavbarLeft from './components/NavbarLeft.vue';
@@ -142,6 +144,9 @@
         ],
       };
     },
+    computed: {
+      ...mapState(['test']),
+    },
     methods: {
       getAllData(query, language) {
         if (query !== '') {
@@ -152,8 +157,8 @@
               `${this.basicUrl}/search${this.apiMv}?api_key=${
                 this.apikey
               }&query=${query}
-            ${language ? `&language=${language}` : ''}
-          `
+                ${language ? `&language=${language}` : ''}
+              `
             )
             .then(res => {
               const movieWithFavuoriteProp = this.AddFavouriteProp(
@@ -167,8 +172,8 @@
               `${this.basicUrl}/search${this.apiTv}?api_key=${
                 this.apikey
               }&query=${query}
-              ${language ? `&language=${language}` : ''}
-              `
+                  ${language ? `&language=${language}` : ''}
+                  `
             )
             .then(r => {
               const seriesWithFavuoriteProp = this.AddFavouriteProp(
