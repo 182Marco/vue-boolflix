@@ -17,7 +17,7 @@
         <i
           @click="
             putFocus();
-            $emit('changeBarCol');
+            $store.commit('toggleColNav');
           "
           class="fas fa-search"
         ></i>
@@ -43,6 +43,7 @@
 </template>
 
 <script>
+  import { mapMutations, mapState } from 'vuex';
   // components
 
   export default {
@@ -56,7 +57,12 @@
         query: '',
       };
     },
+    computed: {
+      ...mapState(['colNav']),
+    },
     methods: {
+      ...mapMutations(['toggleColNav']),
+      // ***
       putFocus() {
         this.showSearch = !this.showSearch;
         setTimeout(() => this.$refs.input.focus(), 10);

@@ -8,12 +8,13 @@
         <img src="@/assets/img/brand.svg" alt="logo" />
         <slot></slot>
       </div>
-      <NavbarRight @changeBarCol="toggleColNav" @sendQuery="DataToVueAp" />
+      <NavbarRight @sendQuery="DataToVueAp" />
     </div>
   </header>
 </template>
 
 <script>
+  import { mapState, mapMutations } from 'vuex';
   // components
   import NavbarRight from './NavbarRight.vue';
 
@@ -24,32 +25,23 @@
       NavbarRight,
     },
     data() {
-      return {
-        colNav: false,
-        transparent: false,
-        fillBlack: false,
-      };
+      return {};
     },
     created() {
       window.addEventListener('scroll', this.handleScroll);
     },
+    computed: {
+      ...mapState(['colNav', 'transparent', 'fillBlack']),
+    },
     methods: {
-      toggleColNav() {
-        this.colNav = !this.colNav;
-        this.colNav ? this.black() : this.goTransparent();
-      },
+      ...mapMutations(['goTransparent', 'black']),
+      // ***
       handleScroll() {
         if (!this.colNav) {
-          window.scrollY < 400 ? this.goTransparent() : this.black();
+          window.scrollY < 400
+            ? this.$store.commit('goTransparent')
+            : this.$store.commit('black');
         }
-      },
-      goTransparent() {
-        this.transparent = true;
-        this.fillBlack = false;
-      },
-      black() {
-        this.transparent = false;
-        this.fillBlack = true;
       },
       DataToVueAp(query, language) {
         this.$emit('sendedData', query, language);
@@ -96,7 +88,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    @include width-height(100vw, 12vh);
+    @include width-height(100vw, 90px);
     background: transparent;
     z-index: 10;
     .cont {

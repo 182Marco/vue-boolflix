@@ -2,12 +2,9 @@
   <div id="app">
     <!-- login -->
     <InitialBg v-show="!accountDone">
-      <LoginPage v-show="!loginDone" @completedLogin="loginDone = !loginDone" />
+      <LoginPage v-show="!loginDone" />
       <!-- scelta utente -->
-      <Account
-        v-show="loginDone && !accountDone"
-        @accountChosen="accountDone = true"
-      />
+      <Account v-show="loginDone && !accountDone" />
     </InitialBg>
     <!-- comincia app vera e propria -->
     <div class="appMenu-page" v-show="accountDone">
@@ -70,7 +67,6 @@
           :flags="flags"
         />
       </List>
-      <h1>{{ test }}</h1>
     </div>
   </div>
 </template>
@@ -106,8 +102,6 @@
     },
     data() {
       return {
-        loginDone: false,
-        accountDone: false,
         basicUrl: 'https://api.themoviedb.org/3',
         apiMv: '/movie',
         apiTv: '/tv',
@@ -132,7 +126,12 @@
       };
     },
     computed: {
-      ...mapState(['test', 'favouriteMovies', 'favouriteSeries']),
+      ...mapState([
+        'loginDone',
+        'accountDone',
+        'favouriteMovies',
+        'favouriteSeries',
+      ]),
     },
     methods: {
       getAllData(query, language) {

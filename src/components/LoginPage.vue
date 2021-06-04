@@ -34,6 +34,7 @@
 </template>
 
 <script>
+  import { mapMutations } from 'vuex';
   // components
 
   export default {
@@ -60,12 +61,15 @@
         ],
       };
     },
+
     methods: {
+      ...mapMutations(['loginOk']),
+      // ***
       ceckSignIn(arOfObj, mailIn, pswIn) {
         if (
           arOfObj.filter(e => e.mail === mailIn && e.psw === pswIn).length > 0
         ) {
-          this.$emit('completedLogin');
+          this.$store.commit('loginOk');
         } else {
           this.er = true;
           setTimeout(() => (this.er = false), 3000);
