@@ -15,24 +15,10 @@
       <!-- film spinto molto su jumbo -->
       <PromoMovie />
       <List :title="`Movies matching your search`" v-show="movies.length > 0">
-        <Card
-          v-for="el in movies"
-          :key="el.id"
-          :obj="el"
-          :flags="flags"
-          @favuriteObj="pushFavuriteObj"
-          @noFavuriteObj="removeFavuriteObj"
-        />
+        <Card v-for="el in movies" :key="el.id" :obj="el" :flags="flags" />
       </List>
       <List :title="`Series matching your search`" v-show="series.length > 0">
-        <Card
-          v-for="el in series"
-          :key="el.id"
-          :obj="el"
-          :flags="flags"
-          @favuriteObj="pushFavuriteObjSeries"
-          @noFavuriteObj="removeFavuriteObjSeries"
-        />
+        <Card v-for="el in series" :key="el.id" :obj="el" :flags="flags" />
       </List>
       <List :title="`Popular movie on Netflix:`">
         <Card v-for="el in popularMov" :key="el.id" :obj="el" :flags="flags" />
