@@ -17,7 +17,7 @@
         <i
           @click="
             putFocus();
-            $store.commit('toggleColNav');
+            $store.dispatch('changeColNav');
           "
           class="fas fa-search"
         ></i>
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-  import { mapMutations, mapState } from 'vuex';
+  import { mapMutations, mapState, mapActions } from 'vuex';
   // components
 
   export default {
@@ -62,6 +62,7 @@
     },
     methods: {
       ...mapMutations(['toggleColNav']),
+      ...mapActions(['changeColNav']),
       // ***
       putFocus() {
         this.showSearch = !this.showSearch;

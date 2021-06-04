@@ -46,16 +46,6 @@ export default new Vuex.Store({
     // cambiare colore della barra
     toggleColNav(state) {
       state.colNav = !state.colNav;
-      if (state.colNav) {
-        state.transparent = false;
-        state.fillBlack = true;
-      } else {
-        state.fillBlack = false;
-        state.transparent = true;
-      }
-      console.log(
-        `Il buleano dello state colnav nello store è ${state.colNav}`
-      );
     },
     goTransparent(state) {
       state.transparent = true;
@@ -66,6 +56,14 @@ export default new Vuex.Store({
       state.fillBlack = true;
     },
   },
-  actions: {},
+  actions: {
+    // cambiare colore della barra
+    changeColNav(context) {
+      context.commit('toggleColNav');
+      context.state.colNav
+        ? context.commit('black')
+        : context.commit('goTransparent');
+    },
+  },
   modules: {},
 });
