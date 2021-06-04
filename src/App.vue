@@ -9,7 +9,7 @@
     <!-- comincia app vera e propria -->
     <div class="appMenu-page" v-show="accountDone">
       <!-- <header msg="Welcome to Your Vue.js App" /> -->
-      <HeaderComp @sendedData="getAllData">
+      <HeaderComp>
         <NavbarLeft :links="linksNavLf" />
       </HeaderComp>
       <!-- film spinto molto su jumbo -->
@@ -88,15 +88,6 @@
     },
     data() {
       return {
-        basicUrl: 'https://api.themoviedb.org/3',
-        apiMv: '/movie',
-        apiTv: '/tv',
-        apikey: '5f6d881d6af75a5cb6855a550e2cd3d2',
-        mv: '',
-        // arrays dei film e serie cercati
-        series: [],
-        movies: [],
-        language: '',
         // array che si poplano al caricamento
         popularMov: [],
         popularSeries: [],
@@ -117,44 +108,15 @@
         'accountDone',
         'favouriteMovies',
         'favouriteSeries',
+        'movies',
+        'series',
+        'query',
+        'language',
+        'basicUrl',
+        'apikey',
       ]),
     },
     methods: {
-      getAllData(query, language) {
-        if (query !== '') {
-          this.results = [];
-          // chimata per i film
-          axios
-            .get(
-              `${this.basicUrl}/search${this.apiMv}?api_key=${
-                this.apikey
-              }&query=${query}
-                ${language ? `&language=${language}` : ''}
-              `
-            )
-            .then(res => {
-              const movieWithFavuoriteProp = this.AddFavouriteProp(
-                res.data.results
-              );
-              this.movies = movieWithFavuoriteProp;
-            });
-          // chimata per le serie
-          axios
-            .get(
-              `${this.basicUrl}/search${this.apiTv}?api_key=${
-                this.apikey
-              }&query=${query}
-                  ${language ? `&language=${language}` : ''}
-                  `
-            )
-            .then(r => {
-              const seriesWithFavuoriteProp = this.AddFavouriteProp(
-                r.data.results
-              );
-              this.series = seriesWithFavuoriteProp;
-            });
-        }
-      },
       // chiamata per popolare subito l'app con film trend
       // rimuovere dalle serie preferite
       getTrends(type) {
@@ -163,18 +125,15 @@
             `${this.basicUrl}/${type}/popular?api_key=${this.apikey}&language=en-US&page=1`
           )
           .then(r => {
-            const popularWithFavuoriteProp = this.AddFavouriteProp(
-              r.data.results
-            );
+            // aumentare le props con una favurite true/false
+            r.data.result = [
+              ...r.data.results.map(e => ({ ...e, favourite: false })),
+            ];
             // faccio un ceck per capire se sono film per scegliere array da popolare
             r.data.results[0].title
-              ? (this.popularMov = popularWithFavuoriteProp)
-              : (this.popularSeries = popularWithFavuoriteProp);
+              ? (this.popularMov = r.data.result)
+              : (this.popularSeries = r.data.result);
           });
-      },
-      // aumentare le props con una favurite true/false
-      AddFavouriteProp(ar) {
-        return ar.map(e => ({ ...e, favourite: false }));
       },
     },
   };

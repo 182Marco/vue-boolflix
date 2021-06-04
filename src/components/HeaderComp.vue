@@ -8,7 +8,7 @@
         <img src="@/assets/img/brand.svg" alt="logo" />
         <slot></slot>
       </div>
-      <NavbarRight @sendQuery="DataToVueAp" />
+      <NavbarRight />
     </div>
   </header>
 </template>
@@ -42,9 +42,6 @@
             ? this.$store.commit('goTransparent')
             : this.$store.commit('black');
         }
-      },
-      DataToVueAp(query, language) {
-        this.$emit('sendedData', query, language);
       },
     },
   };

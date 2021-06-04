@@ -6,8 +6,8 @@
           <input
             ref="input"
             type="text"
-            v-model="query"
-            @keyup="$emit('sendQuery', query, language)"
+            v-model.trim="query"
+            @keyup="$store.dispatch('getAllData')"
           />
           <select v-model="language" name="" id="">
             <option value="it-IT">it</option>
@@ -53,20 +53,39 @@
       return {
         showSearch: false,
         navCol: false,
-        language: 'en-US',
-        query: '',
       };
     },
     computed: {
       ...mapState(['colNav']),
+      query: {
+        get() {
+          return this.$store.state.query;
+        },
+        set(value) {
+          this.$store.commit('setQuery', value);
+        },
+      },
+      language: {
+        get() {
+          return this.$store.state.language;
+        },
+        set(value) {
+          this.$store.commit('setLanguage', value);
+        },
+      },
     },
     methods: {
-      ...mapMutations(['toggleColNav']),
+      ...mapMutations(['toggleColNav', 'setQueryLang']),
       ...mapActions(['changeColNav']),
       // ***
       putFocus() {
         this.showSearch = !this.showSearch;
         setTimeout(() => this.$refs.input.focus(), 10);
+      },
+      sengaPosto() {
+        console.log('funzione da scrivere chiamata');
+        console.warn(this.query);
+        console.log(this.language);
       },
     },
   };
