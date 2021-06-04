@@ -27,6 +27,8 @@ export default new Vuex.Store({
     basicUrl: 'https://api.themoviedb.org/3',
     apiMv: '/movie',
     apiTv: '/tv',
+    // bandiere
+    flags: ['en', 'it'],
   },
   getters: {},
   mutations: {

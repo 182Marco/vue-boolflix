@@ -120,7 +120,7 @@
 </template>
 
 <script>
-  import { mapMutations } from 'vuex';
+  import { mapState, mapMutations } from 'vuex';
   import axios from 'axios';
   import VideoComp from './VideoComp.vue';
   // components
@@ -129,7 +129,6 @@
     name: 'Card',
     props: {
       obj: Object,
-      flags: Array,
     },
     components: {
       VideoComp,
@@ -144,6 +143,9 @@
         apikey: '5f6d881d6af75a5cb6855a550e2cd3d2',
         showVideo: false,
       };
+    },
+    computed: {
+      ...mapState(['flags']),
     },
     methods: {
       // MUTAZIONI

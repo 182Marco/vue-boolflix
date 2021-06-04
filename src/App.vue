@@ -15,43 +15,28 @@
       <!-- film spinto molto su jumbo -->
       <PromoMovie />
       <List :title="`Movies matching your search`" v-show="movies.length > 0">
-        <Card v-for="el in movies" :key="el.id" :obj="el" :flags="flags" />
+        <Card v-for="el in movies" :key="el.id" :obj="el" />
       </List>
       <List :title="`Series matching your search`" v-show="series.length > 0">
-        <Card v-for="el in series" :key="el.id" :obj="el" :flags="flags" />
+        <Card v-for="el in series" :key="el.id" :obj="el" />
       </List>
       <List :title="`Popular movie on Netflix:`">
-        <Card v-for="el in popularMov" :key="el.id" :obj="el" :flags="flags" />
+        <Card v-for="el in popularMov" :key="el.id" :obj="el" />
       </List>
       <List :title="`Popular series on Netflix`">
-        <Card
-          v-for="el in popularSeries"
-          :key="el.id"
-          :obj="el"
-          :flags="flags"
-        />
+        <Card v-for="el in popularSeries" :key="el.id" :obj="el" />
       </List>
       <List
         :title="`Your favourites movie list`"
         v-show="favouriteMovies.length > 0"
       >
-        <Card
-          v-for="el in favouriteMovies"
-          :key="`favM_${el.id}`"
-          :obj="el"
-          :flags="flags"
-        />
+        <Card v-for="el in favouriteMovies" :key="`favM_${el.id}`" :obj="el" />
       </List>
       <List
         :title="`Your favourites series list`"
         v-show="favouriteSeries.length > 0"
       >
-        <Card
-          v-for="el in favouriteSeries"
-          :key="`favS_${el.id}`"
-          :obj="el"
-          :flags="flags"
-        />
+        <Card v-for="el in favouriteSeries" :key="`favS_${el.id}`" :obj="el" />
       </List>
     </div>
   </div>
@@ -91,7 +76,6 @@
         // array che si poplano al caricamento
         popularMov: [],
         popularSeries: [],
-        flags: ['en', 'it'],
         imgSize: 'w780',
         linksNavLf: [
           'Home',
