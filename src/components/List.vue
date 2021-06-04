@@ -35,7 +35,7 @@
     width: 92vw;
     margin: 0 auto;
     &.cards {
-      margin-top: 3vh;
+      margin-top: 50px;
       overflow-x: auto;
       flex-wrap: nowrap;
       padding-bottom: 40px;

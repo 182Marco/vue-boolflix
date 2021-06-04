@@ -3,7 +3,7 @@
     <div class="avatar-wrap">
       <div v-for="(card, i) in avCards" :key="i" class="avatar-card">
         <img
-          @click="$emit('accountChosen')"
+          @click="$store.commit('accountChosen')"
           :src="require(`@/assets/img/${card.linkImg}.webp`)"
           :alt="card.nameImg"
         />
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+  import { mapMutations } from 'vuex';
   // components
 
   export default {
@@ -30,7 +31,9 @@
         ],
       };
     },
-    methods: {},
+    methods: {
+      ...mapMutations(['accountChosen']),
+    },
   };
 </script>
 
