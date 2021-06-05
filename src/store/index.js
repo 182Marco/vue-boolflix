@@ -86,14 +86,13 @@ export default new Vuex.Store({
         : context.commit('goTransparent');
     },
     // chiamata axios quando si fa ricerca
-    getAllData(context) {
-      const s = context.state;
-      if (s.query !== '') {
+    getAllData({ state }) {
+      if (state.query !== '') {
         // chiamata per i film
         axios
           .get(
-            `${s.basicUrl}/search${s.apiMv}?api_key=${s.apikey}&query=${s.query}
-              &language=${s.language}
+            `${state.basicUrl}/search${state.apiMv}?api_key=${state.apikey}&query=${state.query}
+              &language=${state.language}
             `
           )
           .then(res => {
@@ -101,13 +100,13 @@ export default new Vuex.Store({
             res.data.result = [
               ...res.data.results.map(e => ({ ...e, favourite: false })),
             ];
-            s.movies = res.data.result;
+            state.movies = res.data.result;
           });
         // chimata per le serie
         axios
           .get(
-            `${s.basicUrl}/search${s.apiTv}?api_key=${s.apikey}&query=${s.query}
-                &language=${s.language}
+            `${state.basicUrl}/search${state.apiTv}?api_key=${state.apikey}&query=${state.query}
+                &language=${state.language}
                 `
           )
           .then(r => {
@@ -115,7 +114,7 @@ export default new Vuex.Store({
             r.data.result = [
               ...r.data.results.map(e => ({ ...e, favourite: false })),
             ];
-            s.series = r.data.result;
+            state.series = r.data.result;
           });
       }
     },
