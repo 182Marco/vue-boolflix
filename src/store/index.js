@@ -79,11 +79,9 @@ export default new Vuex.Store({
   },
   actions: {
     // cambiare colore della barra
-    changeColNav(context) {
-      context.commit('toggleColNav');
-      context.state.colNav
-        ? context.commit('black')
-        : context.commit('goTransparent');
+    changeColNav({ commit, state }) {
+      commit('toggleColNav');
+      state.colNav ? commit('black') : commit('goTransparent');
     },
     // chiamata axios quando si fa ricerca
     getAllData({ state }) {
