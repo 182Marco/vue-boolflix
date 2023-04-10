@@ -1,8 +1,17 @@
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from 'vue';
+import App from './App.vue';
+// NECESSARIO PER FUNZIONAMENTO DI VUEX
+import store from './store/store.js';
+import Vuex from 'vuex';
 
-Vue.config.productionTip = false
+Vue.use(Vuex);
+// ****************************+***********
+
+Vue.config.productionTip = false;
 
 new Vue({
+  // NECESSARIO PER FUNZIONAMENTO DI VUEX
+  store,
+  // ****************************+***********
   render: h => h(App),
-}).$mount('#app')
+}).$mount('#app');
