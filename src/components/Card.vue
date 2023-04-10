@@ -120,112 +120,112 @@
 </template>
 
 <script>
-  import { mapState, mapMutations } from 'vuex';
-  import axios from 'axios';
-  import VideoComp from './VideoComp.vue';
-  // components
+import { mapState, mapMutations } from "vuex";
+import axios from "axios";
+import VideoComp from "./VideoComp.vue";
+// components
 
-  export default {
-    name: 'Card',
-    props: {
-      obj: Object,
+export default {
+  name: "Card",
+  props: {
+    obj: Object,
+  },
+  components: {
+    VideoComp,
+  },
+  data() {
+    return {
+      BasicUrlMoreDataSingleEL: "https://api.themoviedb.org/3",
+      getMovie: "/movie",
+      getSeries: "/tv",
+      trailerKey: "",
+      open: false,
+      apikey: "5f6d881d6af75a5cb6855a550e2cd3d2",
+      showVideo: false,
+    };
+  },
+  computed: {
+    ...mapState(["flags"]),
+  },
+  methods: {
+    // MUTAZIONI
+    ...mapMutations(["pushFavuriteObj", "removeFavuriteObj"]),
+    // *****
+    getData(id, isMovie) {
+      // controllo subito se di tratta di un film per evitare due chiamate axios al posto di una
+      if (isMovie) {
+        axios
+          .get(
+            `${this.BasicUrlMoreDataSingleEL}${this.getMovie}/${id}/videos?api_key=${this.apikey}&language=it-IT`
+          )
+          .then((r) => {
+            this.trailerKey = r.data.results[0].key;
+          });
+      } else {
+        axios
+          .get(
+            `${this.BasicUrlMoreDataSingleEL}${this.getSeries}/${id}/videos?api_key=${this.apikey}&language=en-US`
+          )
+          .then((r) => {
+            this.trailerKey = r.data.results[0].key;
+          });
+      }
     },
-    components: {
-      VideoComp,
-    },
-    data() {
-      return {
-        BasicUrlMoreDataSingleEL: 'https://api.themoviedb.org/3',
-        getMovie: '/movie',
-        getSeries: '/tv',
-        trailerKey: '',
-        open: false,
-        apikey: '5f6d881d6af75a5cb6855a550e2cd3d2',
-        showVideo: false,
-      };
-    },
-    computed: {
-      ...mapState(['flags']),
-    },
-    methods: {
-      // MUTAZIONI
-      ...mapMutations(['pushFavuriteObj', 'removeFavuriteObj']),
-      // *****
-      getData(id, isMovie) {
-        // controllo subito se di tratta di un film per evitare due chiamate axios al posto di una
-        if (isMovie) {
-          axios
-            .get(
-              `${this.BasicUrlMoreDataSingleEL}${this.getMovie}/${id}/videos?api_key=${this.apikey}&language=it-IT`
-            )
-            .then(r => {
-              this.trailerKey = r.data.results[0].key;
-            });
-        } else {
-          axios
-            .get(
-              `${this.BasicUrlMoreDataSingleEL}${this.getSeries}/${id}/videos?api_key=${this.apikey}&language=en-US`
-            )
-            .then(r => {
-              this.trailerKey = r.data.results[0].key;
-            });
-        }
-      },
-    },
-  };
+  },
+};
 </script>
 
 <style scoped lang="scss">
-  /* parcials */
-  @import '@/scss/var';
-  @import '@/scss/reset';
-  @import '@/scss/mixins';
+/* parcials */
+@import "@/scss/var";
+@import "@/scss/reset";
+@import "@/scss/mixins";
 
-  .card {
-    cursor: pointer;
-    min-width: 250px;
-    height: 400px;
-    padding: 0;
-    margin: 0;
-    margin-right: 30px;
-    transition: transform 0.3s;
-    &:hover {
-      transform: scale(1.03);
-    }
-    .img-wrap {
-      height: 350px;
-      overflow: hidden;
-      width: 100%;
-      margin-bottom: 15px;
-      img {
-        @include width-height(100%, 100%);
-        object-fit: contain;
-        max-width: 233px;
-      }
-    }
-    p {
-      margin-top: 10px;
-      margin-bottom: 0;
+.card {
+  cursor: pointer;
+  min-width: 250px;
+  height: 400px;
+  padding: 0;
+  margin: 0;
+  margin-right: 30px;
+  transition: transform 0.3s;
+  &:hover {
+    transform: scale(1.03);
+  }
+  .img-wrap {
+    height: 350px;
+    overflow: scroll;
+    width: 100%;
+    margin-bottom: 15px;
+    img {
+      @include width-height(100%, 100%);
+      object-fit: contain;
+      max-width: 233px;
     }
   }
-
-  // display solo titolo e foto finche la card non viene cliccata
-  .close.x,
-  p.name.active,
-  .wrap-texts-in-prev {
-    display: none;
+  p {
+    margin-top: 10px;
+    margin-bottom: 0;
   }
+}
 
-  .name {
-    color: $white;
-    font-weight: bold;
-    font-size: 1.3rem;
-  }
+// display solo titolo e foto finche la card non viene cliccata
+.close.x,
+p.name.active,
+.wrap-texts-in-prev {
+  display: none;
+}
 
-  // *****************************************
-  // cambiamento completo di stile
-  // quanodo a una card si aggiunge
-  // la classe active
-  // *****************************************
-  @import '@/scss/cardOpen';
+.name {
+  color: $white;
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+// *****************************************
+// cambiamento completo di stile
+// quanodo a una card si aggiunge
+// la classe active
+// *****************************************
+@import "@/scss/cardOpen";
 </style>

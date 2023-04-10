@@ -43,115 +43,120 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
-  import axios from 'axios';
-  import HeaderComp from './components/HeaderComp.vue';
-  import NavbarLeft from './components/NavbarLeft.vue';
-  import List from './components/List.vue';
-  import Card from './components/Card.vue';
-  import LoginPage from './components/LoginPage.vue';
-  import PromoMovie from './components/PromoMovie.vue';
-  import InitialBg from './components/InitialBg.vue';
-  import Account from './components/Account.vue';
+import { mapState } from "vuex";
+import axios from "axios";
+import HeaderComp from "./components/HeaderComp.vue";
+import NavbarLeft from "./components/NavbarLeft.vue";
+import List from "./components/List.vue";
+import Card from "./components/Card.vue";
+import LoginPage from "./components/LoginPage.vue";
+import PromoMovie from "./components/PromoMovie.vue";
+import InitialBg from "./components/InitialBg.vue";
+import Account from "./components/Account.vue";
 
-  export default {
-    name: 'App',
-    components: {
-      InitialBg,
-      LoginPage,
-      Account,
-      HeaderComp,
-      NavbarLeft,
-      List,
-      Card,
-      PromoMovie,
+export default {
+  name: "App",
+  components: {
+    InitialBg,
+    LoginPage,
+    Account,
+    HeaderComp,
+    NavbarLeft,
+    List,
+    Card,
+    PromoMovie,
+  },
+  created() {
+    window.addEventListener("scroll", this.handleScroll);
+    this.getTrends("movie");
+    this.getTrends("tv");
+  },
+  data() {
+    return {
+      // array che si poplano al caricamento
+      popularMov: [],
+      popularSeries: [],
+      imgSize: "w780",
+      linksNavLf: [
+        "Home",
+        "Serie TV",
+        "Film",
+        "Nuovi e popolari",
+        "La mia lista",
+      ],
+    };
+  },
+  computed: {
+    ...mapState([
+      "loginDone",
+      "accountDone",
+      "favouriteMovies",
+      "favouriteSeries",
+      "movies",
+      "series",
+      "query",
+      "language",
+      "basicUrl",
+      "apikey",
+    ]),
+  },
+  methods: {
+    // chiamata per popolare subito l'app con film trend
+    // rimuovere dalle serie preferite
+    getTrends(type) {
+      axios
+        .get(
+          `${this.basicUrl}/${type}/popular?api_key=${this.apikey}&language=en-US&page=1`
+        )
+        .then((r) => {
+          // aumentare le props con una favurite true/false
+          r.data.result = [
+            ...r.data.results.map((e) => ({ ...e, favourite: false })),
+          ];
+          // faccio un ceck per capire se sono film per scegliere array da popolare
+          r.data.results[0].title
+            ? (this.popularMov = r.data.result)
+            : (this.popularSeries = r.data.result);
+        });
     },
-    created() {
-      window.addEventListener('scroll', this.handleScroll);
-      this.getTrends('movie');
-      this.getTrends('tv');
-    },
-    data() {
-      return {
-        // array che si poplano al caricamento
-        popularMov: [],
-        popularSeries: [],
-        imgSize: 'w780',
-        linksNavLf: [
-          'Home',
-          'Serie TV',
-          'Film',
-          'Nuovi e popolari',
-          'La mia lista',
-        ],
-      };
-    },
-    computed: {
-      ...mapState([
-        'loginDone',
-        'accountDone',
-        'favouriteMovies',
-        'favouriteSeries',
-        'movies',
-        'series',
-        'query',
-        'language',
-        'basicUrl',
-        'apikey',
-      ]),
-    },
-    methods: {
-      // chiamata per popolare subito l'app con film trend
-      // rimuovere dalle serie preferite
-      getTrends(type) {
-        axios
-          .get(
-            `${this.basicUrl}/${type}/popular?api_key=${this.apikey}&language=en-US&page=1`
-          )
-          .then(r => {
-            // aumentare le props con una favurite true/false
-            r.data.result = [
-              ...r.data.results.map(e => ({ ...e, favourite: false })),
-            ];
-            // faccio un ceck per capire se sono film per scegliere array da popolare
-            r.data.results[0].title
-              ? (this.popularMov = r.data.result)
-              : (this.popularSeries = r.data.result);
-          });
-      },
-    },
-  };
+  },
+};
 </script>
 
 <style lang="scss">
-  /* fonts */
-  @import '~@fontsource/montserrat/index.css';
-  @import '~@fontsource/montserrat/700.css';
-  /* parcials */
-  @import '@/scss/var';
-  @import '@/scss/reset';
-  @import '@/scss/mixins';
+/* fonts */
+@import "~@fontsource/montserrat/index.css";
+@import "~@fontsource/montserrat/700.css";
+/* parcials */
+@import "@/scss/var";
+@import "@/scss/reset";
+@import "@/scss/mixins";
 
-  #app {
-    margin: 0;
-    padding: 0;
-    background-color: $main-bg;
-    background-color: $main-bg;
-    color: $titleOfGrupsCol;
-  }
+#app {
+  margin: 0;
+  padding: 0;
+  background-color: $main-bg;
+  background-color: $main-bg;
+  color: $titleOfGrupsCol;
+}
 
-  .appMenu-page {
-    padding-bottom: 200px;
-  }
+.appMenu-page {
+  padding-bottom: 200px;
+}
 
-  img {
-    width: 50px;
-  }
-  .original-lang {
-    margin-right: 20px;
-  }
+img {
+  width: 50px;
+}
+.original-lang {
+  margin-right: 20px;
+}
 
-  section {
-    padding: 0 5vw;
-  }
+section {
+  padding: 0 5vw;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* make scrollbar transparent */
+}
 </style>

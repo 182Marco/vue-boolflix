@@ -43,130 +43,130 @@
 </template>
 
 <script>
-  import { mapMutations, mapState, mapActions } from 'vuex';
-  // components
+import { mapMutations, mapState, mapActions } from "vuex";
+// components
 
-  export default {
-    name: 'NavbarRight',
-    props: {},
-    data() {
-      return {
-        showSearch: false,
-        navCol: false,
-      };
-    },
-    computed: {
-      ...mapState(['colNav']),
-      query: {
-        get() {
-          return this.$store.state.query;
-        },
-        set(value) {
-          this.$store.commit('setQuery', value);
-        },
+export default {
+  name: "NavbarRight",
+  props: {},
+  data() {
+    return {
+      showSearch: false,
+      navCol: false,
+    };
+  },
+  computed: {
+    ...mapState(["colNav"]),
+    query: {
+      get() {
+        return this.$store.state.query;
       },
-      language: {
-        get() {
-          return this.$store.state.language;
-        },
-        set(value) {
-          this.$store.commit('setLanguage', value);
-        },
+      set(value) {
+        this.$store.commit("setQuery", value);
       },
     },
-    methods: {
-      ...mapMutations(['toggleColNav', 'setQueryLang']),
-      ...mapActions(['changeColNav']),
-      // ***
-      putFocus() {
-        this.showSearch = !this.showSearch;
-        setTimeout(() => this.$refs.input.focus(), 10);
+    language: {
+      get() {
+        return this.$store.state.language;
       },
-      sengaPosto() {
-        console.log('funzione da scrivere chiamata');
-        console.warn(this.query);
-        console.log(this.language);
+      set(value) {
+        this.$store.commit("setLanguage", value);
       },
     },
-  };
+  },
+  methods: {
+    ...mapMutations(["toggleColNav", "setQueryLang"]),
+    ...mapActions(["changeColNav"]),
+    // ***
+    putFocus() {
+      this.showSearch = !this.showSearch;
+      setTimeout(() => this.$refs.input.focus(), 10);
+    },
+    sengaPosto() {
+      console.log("funzione da scrivere chiamata");
+      console.warn(this.query);
+      console.log(this.language);
+    },
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-  /* parcials */
-  @import '@/scss/var';
-  @import '@/scss/reset';
-  @import '@/scss/mixins';
+/* parcials */
+@import "@/scss/var";
+@import "@/scss/reset";
+@import "@/scss/mixins";
 
-  nav,
-  ul {
-    @include flex(row, flex-end, center);
-    padding: 0;
-    li {
-      margin-left: 20px;
-      a {
-        color: $white;
-        font-size: 1.3rem;
-        @include flex(row, center, center);
-        img {
-          width: 26px;
-          display: inline-block;
-        }
-        .arrow {
-          @include equilateral-triangle(down, 5px, $white);
-          margin-left: 4px;
-        }
+nav,
+ul {
+  @include flex(row, flex-end, center);
+  padding: 0;
+  li {
+    margin-left: 20px;
+    a {
+      color: $white;
+      font-size: 1.3rem;
+      @include flex(row, center, center);
+      img {
+        width: 26px;
+        display: inline-block;
       }
-      i,
-      select {
-        color: $white;
-        cursor: pointer;
+      .arrow {
+        @include equilateral-triangle(down, 5px, $white);
+        margin-left: 4px;
       }
-      &.search-item {
-        position: relative;
-        .input-wrap {
-          position: absolute;
-          right: calc(100% + 20px);
-          top: 50%;
-          transform: translateY(-50%);
-          height: 26px;
-          overflow: hidden;
-          input {
-            height: 100%;
-            padding: 0 8px;
-            font-size: 1rem;
-            background-color: $searchBarCol;
-            color: $white;
-            border-radius: 5px;
-            &:focus {
-              border: none;
-            }
-          }
-          &::before {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-25%);
-            right: 2.5%;
-            @include pseudo();
-            @include equilateral-triangle(down, 3px, $brand);
-          }
-          select {
+    }
+    i,
+    select {
+      color: $white;
+      cursor: pointer;
+    }
+    &.search-item {
+      position: relative;
+      .input-wrap {
+        position: absolute;
+        right: calc(100% + 20px);
+        top: 50%;
+        transform: translateY(-50%);
+        height: 26px;
+        overflow: scroll;
+        input {
+          height: 100%;
+          padding: 0 8px;
+          font-size: 1rem;
+          background-color: $searchBarCol;
+          color: $white;
+          border-radius: 5px;
+          &:focus {
             border: none;
-            position: absolute;
-            top: 0;
-            right: 0;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            text-indent: 1px;
-            text-overflow: '';
-            background-color: transparent;
-            @include width-height(18%, 100%);
-            &:focus {
-              outline: none;
-            }
+          }
+        }
+        &::before {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-25%);
+          right: 2.5%;
+          @include pseudo();
+          @include equilateral-triangle(down, 3px, $brand);
+        }
+        select {
+          border: none;
+          position: absolute;
+          top: 0;
+          right: 0;
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          text-indent: 1px;
+          text-overflow: "";
+          background-color: transparent;
+          @include width-height(18%, 100%);
+          &:focus {
+            outline: none;
           }
         }
       }
     }
   }
+}
 </style>
